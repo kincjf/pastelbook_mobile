@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
+    <title>PastelBook Mobile</title>
+    <link rel="stylesheet" href="lib/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.css"/>
+    <link rel="stylesheet" href="css/editor.css"/>
+</head>
+<body>
+<div id="editor_main" data-role="page">
+    <!-- EditView -->
+
+    <div data-role="panel" data-display="overlay" data-position="left" data-position-fixed="true"
+         id="editor_main_left_panel">
+        <!-- ScenePreviewCompositeView -->
+    </div>
+    <!-- /left panel -->
+
+    <div data-role="panel" data-display="overlay" data-position="right" data-position-fixed="true"
+         id="editor_main_right_panel">
+        <!-- ImageListView -->
+
+        <div data-role="tabs" id="tabs">
+              
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#my" data-ajax="false">my</a></li>
+                    <li><a href="#search" data-ajax="false">search</a></li>
+                </ul>
+            </div>
+
+            <div id="my" class="ui-body-d ui-content">
+                <!--  MyImageView -->
+                 <h1>MyImageView</h1>
+                   
+            </div>
+
+            <div id="search" class="ui-body-d ui-content">
+                <!--  SearchImageView -->
+                 <h1>SearchImageView</h1>
+                   
+            </div>
+        </div>
+    </div>
+    <!-- /right panel -->
+
+
+    <div data-role="header">
+        <!-- HeaderView  -->
+    </div>
+
+    <div role="main" class="ui-content">
+        <!-- SceneCompositeView -->
+
+    </div>
+
+    <div data-role="footer">
+        <!-- FooterView -->
+        <h1>FooterView</h1>
+    </div>
+</div>
+<!-- End editor detail page-->
+
+<!-- EditView -->
+<div id="editor_detail" data-role="page" data-title="Editing Page">
+
+    <div data-role="header">
+        <!-- command Region -->
+    </div>
+    <div role="content" class="ui-content">
+        <!-- edit Region -->
+    </div>
+
+    <div data-role="footer">
+        <!-- filter Region : 바탕화면 편집시 -->
+        <h1>Filter Region</h1>
+    </div>
+</div>
+<!-- End editor detail page-->
+
+<script src="lib/fabric.js"></script>
+<script src="filter.js"></script>
+<script src="SwipeUpDown.js"></script>
+</body>
+</html>
