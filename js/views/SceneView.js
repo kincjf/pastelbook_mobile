@@ -10,34 +10,29 @@ define([
 	'marionette',
 	'radio',
 	'pb_templates',
-	'object/ImageView',
-	'/object/TextBoxView',
-	'/object/ShapeView',
-	'/object/VideoView',
-	'/object/AudioView',
-	'/object/TableView',
-	'/object/ChartView',
-	'/behaviors/SceneView/AddImageBehavior',
-	'/behaviors/SceneView/AddTextBoxBehavior',
-	'/behaviors/SceneView/AddVideoBehavior',
-	'../controllers/CustomError'
+	'js/views/object/ImageView',
+	'js/views/object/TextBoxView',
+	'js/views/behaviors/SceneView/AddImageBehavior',
+	'js/views/behaviors/SceneView/AddTextBoxBehavior',
+	'js/common/CustomError'
+
 ], function (Marionette, Radio, templates,
-             ImageView, TextBoxView, ShapeView, VideoView, AudioView, TableView, ChartView,
-             AddImageBehavior, AddTextBoxBehavior, AddVideoBehavior,
-             CustomError) {
+             ImageView, TextBoxView,
+             AddImageBehavior, AddTextBoxBehavior,
+				 CustomError) {
 	'use strict';
 
 	return Marionette.CompositeView.extend({
-		tagName: 'div',   // default div
-		className: 'scene-wrap underline',
+		tagName: 'section',   // default div
+		className: 'scene-wrap',
 		template: templates.SceneView,
 
 		ui: {
-			scene: '.scene'
+			scene: '.scene',
+			canvas: 'canvas'
 		},
 
 		events: {
-			'drop @ui.scene': 'setupForInsertObjectByDrop'
 		},
 
 		/** 기존 legacy API method : itemViewContainer*/
@@ -51,7 +46,7 @@ define([
 
 		/** _options는 childViewOptions에서 받아온 데이터 */
 		initialize: function (options) {
-			myLogger.trace("SceneView - init");
+			myLogger.trace("SceneView - initialize");
 
 			_.extend(this, Radio.Commands);
 
@@ -76,16 +71,17 @@ define([
 			});
 
 			/** click : selectScenePreview */
-			this.comply("change:currentScene", this.renderCurrentScene);
+			this.comply(pb.event.change.currentScene.default, this.renderCurrentScene);
 
 			/** 이미지, 가로 텍스트박스, 비디오 추가 */
-			this.comply("add:object:image add:object:textbox:h add:object:video", this.setupForInsertObjectByClick, this);
+			this.comply(pb.event.add.object.image.default + " "
+				+ pb.event.add.object.textbox.default, this.setupForInsertObjectByClick, this);
 
 			/** sceneView를 등록하고 viewSet에 알림. */
 			this.sceneViewSet.set("sceneView", this, {
-				action: pb.value.FLAG.ADD
+				action: pb.event.add.default
 			});
-			this.sceneViewSet.trigger("register:sceneView");
+			this.sceneViewSet.trigger(pb.event.register.sceneView.default);
 		},
 
 		/** item - BaseObject */
@@ -98,16 +94,6 @@ define([
 				return ImageView;
 			} else if (modelType == 'textbox') {
 				return TextBoxView;
-			} else if (modelType == 'shape') {
-				return ShapeView;
-			} else if (modelType == 'video') {
-				return VideoView;
-			} else if (modelType == 'audio') {
-				return AudioView;
-			} else if (modelType == 'table') {
-				return TableView;
-			} else if (modelType == 'chart') {
-				return ChartView;
 			} else {
 				try {
 					throw new CustomError({
@@ -140,10 +126,6 @@ define([
 			AddTextBoxBehavior: {
 				behaviorClass: AddTextBoxBehavior,
 				type: "textbox"
-			},
-			AddVideoBehavior: {
-				behaviorClass: AddVideoBehavior,
-				type: "video"
 			}
 		},
 
@@ -155,20 +137,9 @@ define([
 
 		onRender: function (event, ui) {
 			myLogger.trace("SceneView - onRender");
-			//this.renderCurrentScene();
+			this.renderCurrentScene();
 
-			// 삭제할 때 좀비가 되지 않기 위해서는 droppable, selectable event 삭제해야함.
-			// 이미 삽입된 개체는 삽입되면 안되기 때문에 필터링을 함
-			// 필터링 모듈을 따로 만들어서 관리하는 것이 좋을 것 같음.
-			this.ui.scene.droppable({
-				accept: "[insertable]"
-			}).selectable({
-				autoRefresh: true,
-				filter: '.object',
-				tolerance: 'fit',
-				selected: this.setupForSelectBaseObjectView,
-				unselected: this.setupForUnselectBaseObjectView
-			});
+
 		},
 
 		onShow: function () {
@@ -221,7 +192,7 @@ define([
 			}
 
 			// selectedBaseObject 초기화
-			pb.current.selectedBaseObjectView.command("clear:container");
+			//pb.current.selectedBaseObjectView.command("clear:container");
 			/** initialize에 하려고 했으나, 의미상 현재 선택된 Scene이기 때문에
 			 * loading시(reset)과 add시 current.scene 설정을 구분해야함.
 			 * - add시에는 삽입된 scene에 focus를 맞추면 되지만, loading은 처음 슬라이드를 기준으로 함.

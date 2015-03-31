@@ -17,12 +17,13 @@
 define([
 	'marionette',
 	'pb_templates',
-	'ScenePreviewView',
-	'../collections/BaseObjectList'
+	'js/views/ScenePreviewView',
+	'js/collections/BaseObjectList'
 ], function (Marionette, templates, ScenePreviewView, BaseObjectList) {
 	'use strict';
 
 	return Marionette.CompositeView.extend({
+		tagName: "div",
 		template: templates.ScenePreviewCompositeView,
 		/** legacy API method : itemViewContainer */
 		childView: ScenePreviewView,
@@ -74,18 +75,6 @@ define([
 		},
 
 		onShow: function () {
-			this.ui.addScene.button();
-
-			/** 이건 나중에 하자. */
-//	$( ".sortable" ).sortable({
-//			revert: true
-//		});
-//		$( ".newscene" ).draggable({
-//			connectToSortable: "#sortable",
-//			helper: "clone",
-//			revert: "invalid"
-//		});
-//		$( "ul, li" ).disableSelection();
 		},
 		onAddChild: function(childView){
 			myLogger.trace("ScenePreviewCompositeView - onAddChild");
@@ -96,10 +85,10 @@ define([
 
 			if(this.isReset) {
 				if(childView.model.get("previewScene")) {
-					sceneView.command('change:currentScene');
+					sceneView.command(pb.event.change.currentScene.default);
 				}
 			} else {
-				sceneView.command('change:currentScene');
+				sceneView.command(pb.event.change.currentScene.default);
 			}
 		},
 
@@ -113,10 +102,11 @@ define([
 		 * change .create() to .add()
 		 */
 		createScene: function () {
+			myLogger.trace("ScenePreviewCompositeView - createScene");
+
 			this.collection.push({
 				previewScene: false
 			});
-			myLogger.trace("ScenePreviewCompositeView - createScene");
 		}
 	});
 });

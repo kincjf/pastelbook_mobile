@@ -10,7 +10,7 @@
  */
 define([
 	'backbone',
-	'../models/SceneViewSet'
+	'js/models/SceneViewSet'
 ], function (Backbone, SceneViewSet) {
 	'use strict';
 
@@ -29,7 +29,7 @@ define([
 			myLogger.trace("SceneViewSetList - intialize");
 
 			var removed;
-			if(options.action === pb.value.FLAG.REMOVE) {
+			if(options.action === pb.event.remove.default) {
 				if(_.isNull(model.get("sceneView")) && _.isNull(model.get("scenePreviewView"))) {
 					this.remove(model);
 					removed = true;

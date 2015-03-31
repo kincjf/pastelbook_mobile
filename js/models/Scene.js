@@ -8,7 +8,7 @@
  */
 define([
 	'backbone',
-	'../collections/BaseObjectList'
+	'js/collections/BaseObjectList'
 ], function (Backbone, BaseObjectList) {
 	'use strict';
 

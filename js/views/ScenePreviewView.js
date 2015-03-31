@@ -20,7 +20,6 @@ define([
 	'use strict';
 
 	var ScenePreviewView = Marionette.ItemView.extend({
-
 		template: templates.ScenePreviewView,
 
 		ui: {

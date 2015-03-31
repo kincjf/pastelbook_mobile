@@ -10,19 +10,19 @@ define(function (require) {
 	'use strict';
 
 	return {
-		HeaderView: require('tpl!pb/templates/HeaderView.tpl'),
-		SceneCompositeView: require('tpl!pb/templates/SceneCompositeView.tpl'),
-		SceneView: require('tpl!pb/templates/SceneView.tpl'),
-		FooterView: require('tpl!pb/templates/FooterView.tpl'),
+		HeaderView: require('tpl!js/templates/HeaderView.tpl'),
+		SceneCompositeView: require('tpl!js/templates/SceneCompositeView.tpl'),
+		SceneView: require('tpl!js/templates/SceneView.tpl'),
+		FooterView: require('tpl!js/templates/FooterView.tpl'),
 
-		ImageListView: require('tpl!pb/templates/ImageListView.tpl'),
-		MyImageView: require('tpl!pb/templates/MyImageView.tpl'),
-		SearchImageView: require('tpl!pb/templates/SearchImageView.tpl'),
+		ImageListView: require('tpl!js/templates/ImageListView.tpl'),
+		MyImageView: require('tpl!js/templates/MyImageView.tpl'),
+		SearchImageView: require('tpl!js/templates/SearchImageView.tpl'),
 
-		ScenePreviewCompositeView: require('tpl!pb/templates/ScenePreviewCompositeView.tpl'),
-		ScenePreviewView: require('tpl!pb/templates/ScenePreviewView.tpl'),
+		ScenePreviewCompositeView: require('tpl!js/templates/ScenePreviewCompositeView.tpl'),
+		ScenePreviewView: require('tpl!js/templates/ScenePreviewView.tpl'),
 
-		ImageView: require('tpl!pb/templates/ImageView.tpl'),
-		TextBoxView: require('tpl!pb/templates/TextBoxView.tpl')
+		ImageView: require('tpl!js/templates/ImageView.tpl'),
+		TextBoxView: require('tpl!js/templates/TextBoxView.tpl')
 	};
 });

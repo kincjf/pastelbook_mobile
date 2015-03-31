@@ -15,13 +15,13 @@
 define([
 	'marionette',
 	'pb_templates',
-	'../collections/BaseObjectList',
-	'/SceneView'
+	'js/collections/BaseObjectList',
+	'js/views/SceneView'
 ], function (Marionette, templates, BaseObjectList, SceneView) {
 	'use strict';
 
 	return Marionette.CompositeView.extend({
-		tagName: 'section',
+		tagName: "div",
 
 		/** CompositeView에서는 무조건 template을 써야되는 듯함. */
 		/** itemView에서는 잘 모르겠음. */
@@ -35,7 +35,7 @@ define([
 		className: 'scene-wrap',
 
 		ui: {
-			scenes: '#dlg_current_scene'
+			//scenes: '#dlg_current_scene'
 		},
 
 //		events: {

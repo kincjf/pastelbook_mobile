@@ -7,7 +7,7 @@
  */
 define([
 	'backbone',
-	'BaseObject'
+	'js/models/BaseObject'
 ], function (Backbone, BaseObject) {
 	'use strict';
 

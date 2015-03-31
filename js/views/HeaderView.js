@@ -3,3 +3,6 @@
  * navigator 역할 수행
  * Created by KIMSEONHO on 2015-03-28.
  */
+define(function () {
+	return {};
+});

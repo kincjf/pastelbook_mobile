@@ -12,7 +12,7 @@ define([
 	'backbone',
 	'radio',
 	'localStorage',
-	'../collections/SceneList',
+	'js/collections/SceneList',
 ], function (Backbone, Radio, LocalStorage, SceneList) {
 	'use strict';
 

@@ -9,79 +9,56 @@
     <link rel="stylesheet" href="css/editor.css"/>
 </head>
 <body>
-<div id="editor_main" data-role="page">
-    <!-- EditView -->
+    <div id="editor_main" data-role="page">
 
-    <div data-role="panel" data-display="overlay" data-position="left" data-position-fixed="true"
-         id="editor_main_left_panel">
+        <div data-role="panel" data-display="overlay" data-position="left" data-position-fixed="true"
+         id="scene_preview_panel">
         <!-- ScenePreviewCompositeView -->
-    </div>
-    <!-- /left panel -->
+        </div>
+        <!-- /left panel -->
 
-    <div data-role="panel" data-display="overlay" data-position="right" data-position-fixed="true"
-         id="editor_main_right_panel">
-        <!-- ImageListView -->
+        <div data-role="panel" data-display="overlay" data-position="right" data-position-fixed="true"
+             id="image_list_panel">
+            <!-- ImageListView -->
+        </div>
+        <!-- /right panel -->
 
-        <div data-role="tabs" id="tabs">
-              
-            <div data-role="navbar">
-                <ul>
-                    <li><a href="#my" data-ajax="false">my</a></li>
-                    <li><a href="#search" data-ajax="false">search</a></li>
-                </ul>
-            </div>
 
-            <div id="my" class="ui-body-d ui-content">
-                <!--  MyImageView -->
-                 <h1>MyImageView</h1>
-                   
-            </div>
+        <div data-role="header" id="editor_main_header">
+            <!-- HeaderView  -->
+        </div>
 
-            <div id="search" class="ui-body-d ui-content">
-                <!--  SearchImageView -->
-                 <h1>SearchImageView</h1>
-                   
-            </div>
+        <div role="main" class="ui-content" id="editor_main_content">
+            <!-- SceneCompositeView -->
+        </div>
+
+        <div data-role="footer" id="editor_main_footer">
+            <!-- FooterView -->
         </div>
     </div>
-    <!-- /right panel -->
+    <!-- End editor detail page-->
 
+    <div id="edit_detail" data-role="page" data-title="EditView">
+        <!-- EditView -->
 
-    <div data-role="header">
-        <!-- HeaderView  -->
+        <div data-role="header">
+            <!-- command Region -->
+        </div>
+
+        <div role="content" class="ui-content">
+            <!-- edit Region -->
+        </div>
+
+        <div data-role="footer">
+            <!-- filter Region : 바탕화면 편집시 -->
+        </div>
     </div>
+    <!-- End editor detail page-->
 
-    <div role="main" class="ui-content">
-        <!-- SceneCompositeView -->
+    <!-- configure for use logging library - myLogger -->
+    <script src="lib/log4javascript_uncompressed.js"></script>
+    <script src="js/log4javascript-config.js"></script>
 
-    </div>
-
-    <div data-role="footer">
-        <!-- FooterView -->
-        <h1>FooterView</h1>
-    </div>
-</div>
-<!-- End editor detail page-->
-
-<!-- EditView -->
-<div id="editor_detail" data-role="page" data-title="Editing Page">
-
-    <div data-role="header">
-        <!-- command Region -->
-    </div>
-    <div role="content" class="ui-content">
-        <!-- edit Region -->
-    </div>
-
-    <div data-role="footer">
-        <!-- filter Region : 바탕화면 편집시 -->
-        <h1>Filter Region</h1>
-    </div>
-</div>
-<!-- End editor detail page-->
-
-<script src="lib/fabric.js"></script>
-<script src="filter.js"></script>
-<script src="SwipeUpDown.js"></script>
+    <script data-main="js/pb-config" src="lib/require.js"></script>
 </body>
 </html>

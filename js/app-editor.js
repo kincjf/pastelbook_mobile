@@ -13,15 +13,20 @@
  */
 define([
 	'marionette',
-	'models/Project',
-	'collections/SceneList',
-	'collections/SceneViewSetList',
-	'views/SceneCompositeView',
-	'views/ScenePreviewCompositeView'
+	'js/models/Project',
+	'js/collections/SceneList',
+	'js/collections/SceneViewSetList',
+	'js/views/SceneCompositeView',
+	'js/views/ScenePreviewCompositeView',
+	'js/views/HeaderView',
+	'js/views/FooterView',
+	'js/views/ImageListView',
+	'js/views/EditView'
 ], function (Marionette,
              Project,
              SceneList, SceneViewSetList,
-             SceneCompositeView, ScenePreviewCompositeView) {
+             SceneCompositeView, ScenePreviewCompositeView,
+				 HeaderView, FooterView, ImageListView, EditView) {
 	'use strict';
 
 	var app_editor = new Marionette.Application();
@@ -32,27 +37,26 @@ define([
 		parse: false
 	});
 
-	pb.type.collection.sceneList = pb.type.model.project.get("sceneList");
+	var sceneList = pb.type.model.project.get("sceneList");
 
 	// SceneView와 ScenePreviewView를 엮어줌
 	pb.type.view.sceneViewSetList = new SceneViewSetList();
-
-	/** Scene이 처음에 하나는 있어야 되기 때문에 */
-	pb.type.collection.sceneList.push({
-		previewScene: true
-	});
 
 	/** 실행순서 - SceneCompositeview/SceneView -> ScenePreviewCompositeView/ScenePreviewView
 	 * 아래의 코드와 같이 먼저 선언된 순서대로 event가 등록되는 것 같음.
 	 */
 	var sceneCompositeView = new SceneCompositeView({
-		collection: pb.type.collection.sceneList
+		collection: sceneList
 	});
-	pb.type.view.sceneCompositeView = sceneCompositeView;
 
 	var scenePreviewCompositeView = new ScenePreviewCompositeView({
-		collection: pb.type.collection.sceneList
+		collection: sceneList
 	});
+
+	// HeaderView
+	// FooterView
+	// ImageListView
+	// EditView
 
 	/** event driven message passing을 위한 Backbone.Radio
 	 * 현재는 global로 관리를 하지만, app이 커질 경우 차후에는 event 종류별로
@@ -68,15 +72,22 @@ define([
 	 * !# 현재 있는 DOM이 아니면 el이 없다는 error 발생함.
 	 */
 	app_editor.addRegions({
-		currentScene: '#dlg_current_scene',
-		currentScenePreview: '#dlg_scene_preview',
-
-		menuDialog: '#dlg_main_menu'
+		scenePreviewCompositeView: '#scene_preview_panel',
+		imageListView: '#image_list_panel',
+		headerView: '#editor_main_header',
+		footerView: '#editor_main_footer',
+		sceneCompositeView: '#editor_main_content',
+		editView: '#edit_detail'
 	});
 
 	app_editor.addInitializer(function (options) {
-		app_editor.currentScene.show(sceneCompositeView);
-		app_editor.currentScenePreview.show(scenePreviewCompositeView);
+		/** Scene이 처음에 하나는 있어야 되기 때문에 */
+		sceneList.push({
+			previewScene: true
+		});
+
+		app_editor.sceneCompositeView.show(sceneCompositeView);
+		//app_editor.currentScenePreview.show(scenePreviewCompositeView);
 	});
 
 	app_editor.addInitializer(function (options) {
@@ -86,18 +97,18 @@ define([
 		 *  - event driven 방식에서는 data 변동에 대한 다수의 callback이 수행되는 것을
 		 *  고려해야 한다.
 		 */
-		app_editor.commands.setHandler("loading:project", function (data) {
-			myLogger.trace("Application - loadProject");
-
-			var projectInfo = _.omit(data, 'sceneList');
-			var projectData = data.sceneList;
-
-			pb.current.scene = null;
-			pb.current.scenePreview = null;
-
-			pb.type.model.project.set(projectInfo);
-			pb.type.model.project.get('sceneList').reset(projectData);
-		});
+		//app_editor.commands.setHandler("loading:project", function (data) {
+		//	myLogger.trace("Application - loadProject");
+		//
+		//	var projectInfo = _.omit(data, 'sceneList');
+		//	var projectData = data.sceneList;
+		//
+		//	pb.current.scene = null;
+		//	pb.current.scenePreview = null;
+		//
+		//	pb.type.model.project.set(projectInfo);
+		//	pb.type.model.project.get('sceneList').reset(projectData);
+		//});
 
 		/*app_editor.commands.setHandler("save:project", function () {
 			myLogger.trace("Application - saveProject");
@@ -118,13 +129,14 @@ define([
 			});
 		});*/
 
-		app_editor.vent.on("save:thumbnail", function (sceneViewSet) {
-			myLogger.trace("Application - changeThumbnail");
+		//app_editor.vent.on("save:thumbnail", function (sceneViewSet) {
+		//	myLogger.trace("Application - changeThumbnail");
+		//
+		//	var sceneView = sceneViewSet.get('sceneView');
+		//	pb.util.captureController.capturePreview(sceneView.$el, sceneViewSet);
+		//});
 
-			var sceneView = sceneViewSet.get('sceneView');
-			pb.util.captureController.capturePreview(sceneView.$el, sceneViewSet);
-		});
-
-		return app_editor;
 	});
+
+	return app_editor;
 });

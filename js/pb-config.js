@@ -2,7 +2,7 @@
  *   requirejs를 쓰기 때문에 설정을 해줌
  */
 requirejs.config({
-	// baseUrl: 'js', // 로딩된 웹페이지 기준
+	baseUrl: '.', // 로딩된 웹페이지 기준
 	paths: {
 		backbone: 'lib/backbone',
 		jquery: 'lib/jquery-1.11.2.min',
@@ -16,10 +16,10 @@ requirejs.config({
 		tpl: 'lib/tpl',
 		// external library
 
-		pb_namespace: 'pb/pb-namespace',
-		pb_templates: 'pb/templates',
+		pb_namespace: 'js/pb-namespace',
+		pb_templates: 'js/templates',
 
-		pb_app_editor: 'pb/app_editor'		//main start point
+		pb_app_editor: 'js/app-editor'		//main start point
 	},
 
 	/** shim은 non-AMD에서는 종속성을 뜻하지만
@@ -58,7 +58,7 @@ requirejs.config({
 		},
 
 		pb_app_editor: {
-			deps: ['pb_namespace', 'pb_template']
+			deps: ['pb_namespace', 'pb_templates']
 		}
 	},
 
@@ -67,7 +67,7 @@ requirejs.config({
 });
 
 // Includes File Dependencies
-require([ "jquery", "backbone", "routers/MobileRouter" ], function( $, Backbone, MobileRouter ) {
+require([ "jquery", "backbone", "js/routers/MobileRouter" ], function( $, Backbone, MobileRouter ) {
 	$( document ).on( "mobileinit",
 		// Set up the "mobileinit" handler before requiring jQuery Mobile's module
 		function() {
@@ -84,9 +84,9 @@ require([ "jquery", "backbone", "routers/MobileRouter" ], function( $, Backbone,
 		pb.app_editor = app_editor;
 		pb.app_editor.start(); // Application start
 
-		pb.type.router.mobileRouterrouter = new MobileRouter();
+		new MobileRouter();
 
-		myLogger.trace("pb_app_tool loading Complete");
+		myLogger.trace("pb_app_editor loading Complete");
 
 		///** 요놈이 이상하게 덮어씌워짐.. 이상하게 */
 		//$(".ui-widget-overlay.ui-front").remove();

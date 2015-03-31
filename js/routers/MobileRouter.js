@@ -30,7 +30,7 @@ define([
 		home: function () {
 			myLogger.trace("MobileRouter - home");
 			// Programatically changes to the categories page
-			$.mobile.changePage("#editor", {reverse: false, changeHash: false});
+			$.mobile.changePage("#editor_main", {reverse: false, changeHash: false});
 		},
 
 		// Category method that passes in the type that is appended to the url hash

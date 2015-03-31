@@ -8,7 +8,7 @@
  */
 define([
   'pb_templates',
-  'BaseObjectView'
+  'js/views/object/BaseObjectView'
 ], function (templates, BaseObjectView) {
   'use strict';
 //	var ENTER_KEY = 13;

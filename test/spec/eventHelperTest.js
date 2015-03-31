@@ -7,54 +7,54 @@ define(['jquery', 'underscore', 'pubsub', 'js/common/EventHelper'],
 			console.log("EventHelper - setup");
 			this.event1 = this.event1 || {
 				clear: {
-					default: 'clear',
+					'default': 'clear',
 					container: {
-						default: 'container',
+						'default': 'container',
 						one: {
-							default: 'one',
+							'default': 'one',
 							sc: {
-								default: 'sc'
+								'default': 'sc'
 							}
 						}
 					}
 				},
 				add: {
-					default: 'add',
+					'default': 'add',
 					name: {
-						default: 'name'
+						'default': 'name'
 					}
 				}
 			};
 
 			this.event2 = {
 				save: {
-					default: 'save',
+					'default': 'save',
 					project: {
-						default: 'project'
+						'default': 'project'
 					}
 				},
 				reset: {
-					default: 'reset'
+					'default': 'reset'
 				},
 				add: {
-					default: 'add',
+					'default': 'add',
 					object: {
-						default: 'object',
+						'default': 'object',
 						image: {
-							default: 'image'
+							'default': 'image'
 						},
 						textbox: {
-							default: 'textbox'
+							'default': 'textbox'
 						}
 					}
 				},
 				change: {
-					default: 'change',
+					'default': 'change',
 					currentScene: {
-						default: 'currentScene'
+						'default': 'currentScene'
 					},
 					preview: {
-						default: 'preview'
+						'default': 'preview'
 					},
 					sceneView: {
 						default: 'sceneView'

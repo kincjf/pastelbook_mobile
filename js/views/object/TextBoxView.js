@@ -8,8 +8,7 @@
  */
 define([
 	'pb_templates',
-	'BaseObjectView',
-	'ckeditor-jquery'
+	'js/views/object/BaseObjectView'
 ], function (templates, BaseObjectView) {
 	'use strict';
 //	var ENTER_KEY = 13;
@@ -25,8 +24,8 @@ define([
 		},
 
 		events: {
-			'focusin @ui.content': 'enableEditing',
-			'focusout @ui.content': 'saveContent'
+			//'focusin @ui.content': 'enableEditing',
+			//'focusout @ui.content': 'saveContent'
 //			'dblclick label': 'onEditDblclick',
 //			'keydown .edit': 'onEditKeyDown',
 //			'blur .edit': 'onEditBlur'
@@ -71,9 +70,9 @@ define([
 		onShow: function (v) {
 			BaseObjectView.prototype.onShow.call(this);
 
-			this.ui.content.contextMenu(
-				_.union(this.objectContextMenus, this.textBoxContextMenus),
-				this.contextMenuOptions);
+			//this.ui.content.contextMenu(
+			//	_.union(this.objectContextMenus, this.textBoxContextMenus),
+			//	this.contextMenuOptions);
 
 			myLogger.trace("TextBoxView - onShow");
 		},
@@ -86,7 +85,7 @@ define([
 		},
 
 		onDomRefresh: function() {
-			this.ui.content.ckeditor();
+			//this.ui.content.ckeditor();
 		},
 
 		changeText: function () {

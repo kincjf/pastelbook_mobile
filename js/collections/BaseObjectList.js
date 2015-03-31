@@ -7,12 +7,12 @@
  */
 define([
 	'radio',
-	'../models/Image',
-	'../models/TextBox',
-	'../models/Shape',
-	'../models/BaseObject',
-	'../controllers/CustomError'
-], function (Radio, Image, TextBox, Shape, Video, Audio, Table, Chart, BaseObject,
+	'js/models/Image',
+	'js/models/TextBox',
+	'js/models/Shape',
+	'js/models/BaseObject',
+	'js/common/CustomError'
+], function (Radio, Image, TextBox, Shape, BaseObject,
              CustomError) {
 	'use strict';
 
@@ -24,14 +24,6 @@ define([
 				return new TextBox(attrs, options);
 			} else if (attrs.type == 'shape') {
 				return new Shape(attrs, options);
-			} else if (attrs.type == 'video') {
-				return new Video(attrs, options);
-			} else if (attrs.type == 'audio') {
-				return new Audio(attrs, options);
-			} else if (attrs.type == 'table') {
-				return new Table(attrs, options);
-			} else if (attrs.type == 'chart') {
-				return new Chart(attrs, options);
 			} else if (attrs.type == 'object') {
 				return new BaseObject(attrs, options);
 			} else {

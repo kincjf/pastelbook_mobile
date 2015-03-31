@@ -9,7 +9,7 @@
  */
 define([
 	'backbone',
-	'../models/Scene'
+	'js/models/Scene'
 ], function (Backbone, Scene) {
 	'use strict';
 

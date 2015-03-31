@@ -6,7 +6,7 @@
 
 var pb = pb || {};
 
-require(['require', 'common/EventHelper'],
+require(['require', 'js/common/EventHelper'],
 	function (require, EventHelper) {
 		/** 다이얼로그, current 정보등 단순 data instance는 낙타체로 하고,
 		 * Model, Collection, View, Channel, Scene등 Backbone instance는
@@ -25,27 +25,9 @@ require(['require', 'common/EventHelper'],
 		/** SceneViewSetList */
 		pb.type.view.sceneViewSetList = pb.type.view.sceneViewSetList || {};
 
-		/** Menu */
-		pb.type.view.menu = pb.type.view.menu || {};
-		pb.type.view.menu.project = pb.type.view.menu.project || {};
-		pb.type.view.menu.addBaseObject = pb.type.view.menu.addBaseObject || {};
-
 		/** Models */
 		pb.type.model = pb.type.model || {};
 		pb.type.model.project = pb.type.model.project || {};
-
-		/** Collection */
-		pb.type.collection = pb.type.collection || {};
-		pb.type.collection.sceneList = pb.type.collection.sceneList || {};
-
-		/** Router */
-		pb.type.router = pb.type.router || {
-			mobileRouter : this.mobileRouter || {}
-		};
-
-
-		/** Channels */
-		pb.type.channel = pb.type.channel || {};
 
 		// 여기서부터는 원기추가
 		pb.current = pb.current || {}; // 현재 선택된도구, 현재 슬라이드, 현재 클립보드 등 다수 -> 여기서는 접근가능하게 오브젝트만 만들어놓고 backbone model상속받은 것으로 바꿈
@@ -93,53 +75,56 @@ require(['require', 'common/EventHelper'],
 		// example - add.default = "add", add.name.default = "add:name",
 		//           clear.container.one.sc.default = "clear:container:one:sc"
 		pb.event = pb.event || EventHelper.makeEvent({
-			save: {
-				default: 'save',
-				project: {
-					default: 'project'
-				}
+				save: {
+					'default': 'save',
+					project: {
+						'default': 'project'
+					}
 			},
 			reset: {
-				default: 'reset'
+				'default': 'reset'
 			},
 			add: {
-				default: 'add',
+				'default': 'add',
 				object: {
-					default: 'object',
+					'default': 'object',
 					image: {
-						default: 'image'
+						'default': 'image'
 					},
 					textbox: {
-						default: 'textbox'
+						'default': 'textbox'
 					}
 				}
 			},
 			change: {
-				default: 'change',
+				'default': 'change',
 				currentScene: {
-					default: 'currentScene'
+					'default': 'currentScene'
 				},
 				preview: {
-					default: 'preview'
+					'default': 'preview'
 				},
 				sceneView: {
-					default: 'sceneView'
+					'default': 'sceneView'
 				},
 				scenePreviewView: {
-					default: 'scenePreviewView'
+					'default': 'scenePreviewView'
 				}
 			},
+			remove: {
+				'default': 'remove'
+			},
 			register: {
-				default: 'register',
+				'default': 'register',
 				sceneView: {
-					default: 'sceneView'
+					'default': 'sceneView'
 				},
 				scenePreviewView: {
-					default: 'scenePreviewView'
+					'default': 'scenePreviewView'
 				}
 			},
 			destroy: {
-				default: 'destroy'
+				'default': 'destroy'
 			}
 		});
 	}); // require
