@@ -41,13 +41,9 @@ define([
 //		events: {
 //      'click #add_slide': 'addSlide'
 //		},
-		/** options : instance 초기화시 받은 parameter object*/
+		/** options : instance 초기화시 받은 parameter object */
 		initialize: function (options) {
-			myLogger.trace("SceneCompositeView - init");
-			this.isReset = false;
-			this.listenTo(this.collection, "reset", function () {
-				this.isReset = true;
-			}, this);
+			myLogger.trace("SceneCompositeView - initialize");
       },
 
 		/** it does passing parameter, childView initialize(_options)
@@ -71,8 +67,7 @@ define([
 			return {
 				model: model,
 				collection: baseObjectList,
-				index: index,
-				isReset: this.isReset
+				index: index
 			}
 		},
 

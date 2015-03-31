@@ -1,1 +1,1 @@
-<img src="<%= imgSrc %>" class="image"/>
+<img src="<%= src %>" class="image"/>

@@ -36,12 +36,9 @@ require(['require', 'js/common/EventHelper'],
 		/** 현재 선택된 정보 (View instance) */
 		pb.current.scene = pb.current.scene || null;
 		pb.current.scenePreview = pb.current.scenePreview || null;
+		pb.current.object = pb.current.object || null;
 
 		pb.util = pb.util || { };
-
-		pb.dummy = pb.dummy || {
-			img: new Image()
-		};
 
 		/** global 변수 설정
 		 * value 내의 하위 변수들은 모두 대문자를 사용함
@@ -75,11 +72,11 @@ require(['require', 'js/common/EventHelper'],
 		// example - add.default = "add", add.name.default = "add:name",
 		//           clear.container.one.sc.default = "clear:container:one:sc"
 		pb.event = pb.event || EventHelper.makeEvent({
-				save: {
-					'default': 'save',
-					project: {
-						'default': 'project'
-					}
+			save: {
+				'default': 'save',
+				project: {
+					'default': 'project'
+				}
 			},
 			reset: {
 				'default': 'reset'
@@ -114,6 +111,9 @@ require(['require', 'js/common/EventHelper'],
 			remove: {
 				'default': 'remove'
 			},
+			destroy: {
+				'default': 'destroy'
+			},
 			register: {
 				'default': 'register',
 				sceneView: {
@@ -123,8 +123,20 @@ require(['require', 'js/common/EventHelper'],
 					'default': 'scenePreviewView'
 				}
 			},
-			destroy: {
-				'default': 'destroy'
+			show: {
+				'default': 'show',
+				scene: {
+					'default': 'scene'
+				}
+			},
+			hide: {
+				'default': 'hide',
+				scene: {
+					'default': 'scene'
+				}
+			},
+			selected: {
+				'default': 'selected'
 			}
 		});
 	}); // require

@@ -1,20 +1,19 @@
-/*global define */
+/* global define */
 /**
- * ImageView extends BaseObjectView
- *
- * - 구현내용/순서
- * 1. 추가요소(BaseObject) 삽입 => (구현중)
- *
+ * Image 처리시 필요한 기능을 나열한 Controller 역할을 함
+ * (UI로써의 역할은 하지 않음)
  */
 define([
 	'marionette',
+	'fabric',
 	'pb_templates',
 	'js/views/object/BaseObjectView'
-], function (Marionette, templates, BaseObjectView) {
+], function (Marionette, fabric, templates, BaseObjectView) {
 	'use strict';
 
 	return BaseObjectView.extend({
-		template: templates.ImageView,
+		tagName: 'img',
+		template: false,
 		ui: {
 			img: "img"
 		},
@@ -29,26 +28,59 @@ define([
 	      'type': 'image'
 		},
 
-		className: BaseObjectView.prototype.className,
+		className: BaseObjectView.prototype.className + " " + "image",
 
 		initialize: function (options) {
+			myLogger.trace("ImageView - initialize");
+			this.canvas = options.canvas;
 			BaseObjectView.prototype.initialize.call(this, options);
-			myLogger.trace("ImageView - init");
 
 			//_.extend(this.events, BaseObjectView.prototype.events);
 			//_.extend(this.ui, BaseObjectView.prototype.ui);
 		},
 
 		// "show" / onShow - Called on the view instance when the view has been rendered and displayed.
-		onShow: function (v) {
+		onShow: function (view) {
 			myLogger.trace("ImageView - onShow");
+
 			BaseObjectView.prototype.onShow.call(this);
 		},
 
 		// "render" / onRender - after everything has been rendered
-		onRender: function (v) {
+		// view - ImageView instance
+		// img tag를 이용한 방법은 한 번 클릭을 해야 나오고
+		// fromURL을 이용한 방법은 바로 렌더링됨
+		// (무슨 차이인지 모르겠음. 아마도 dom기반이라 dom에 뿌려지기 전에 읽어와서 그런 듯 하다.)
+		onRender: function (view) {
 			myLogger.trace("ImageView - onRender");
+			this.el.src = this.model.get("src");
+
+			//this.image = new fabric.Image(this.el, {
+			//	left: 100,
+			//	top: 100,
+			//	width: 100,
+			//	height: 100,
+			//	angle: 0,
+			//	opacity: 0.85
+			//});
+			//this.canvas.add(this.image);
+
+			var that = this;
+			fabric.Image.fromURL('./test/image/my-image.jpg', function(imgInstance) {
+				that.image = imgInstance;
+
+				that.image.on(pb.event.selected.default, _.bind(function(event) {
+					// 현재 선택된 object(view)를 지정함 (mobile버전 : 하나만 선택할 수 있음)
+					pb.current.object = that;
+				}, that));
+
+				that.canvas.add(that.image);
+			});
 			BaseObjectView.prototype.onRender.call(this);
+		},
+
+		onDomRefresh: function(view) {
+			myLogger.trace("ImageView - onDomRefresh");
 		},
 
 		onBeforeDestroy: function() {

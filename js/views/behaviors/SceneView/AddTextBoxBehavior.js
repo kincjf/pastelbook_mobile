@@ -31,7 +31,7 @@ define([
            htmlString: textBoxOptions.htmlString || this.options.htmlString
         });
 
-        pb.app_tool.vent.trigger("save:thumbnail", this.view.sceneViewSet);
+        //pb.app_tool.vent.trigger("save:thumbnail", this.view.sceneViewSet);
      }
   });
 });

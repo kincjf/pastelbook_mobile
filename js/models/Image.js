@@ -13,6 +13,7 @@ define([
 	return BaseObject.extend({
 		// attribute가 확정되는대로 {defaults}에 추가될 예정임
 		defaults: {
+			src: "./image/dummy.png"
 		},
 
 		initialize: function (attrs, options) {

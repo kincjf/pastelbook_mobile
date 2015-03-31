@@ -34,7 +34,7 @@ define([
 		 * 값이 할당되기 전에 handling을 하려면 save/set을 override 해야함.
 		 */
 
-		initialize: function (model, options) {
+		initialize: function (attrs, options) {
 			myLogger.trace('Project - initialize');
 
 			_.extend(this, Radio.Commands);
@@ -51,7 +51,7 @@ define([
 			 * 2. createDate, modifyDate 생성
 			 * 3. sceneList 초기화
 			 */
-			if (!_.has(model, "_id")) {
+			if (!_.has(attrs, "_id")) {
 				this.set('_id', this.cid);
 			}
 
@@ -59,11 +59,11 @@ define([
 			this.set('createDate', initDate);
 			this.set('modifyDate', initDate);
 
-			if (!model.has("sceneList")) {
+			if (_.has(attrs, "sceneList")) {
 				this.set('sceneList', new SceneList());
 			} else {
 				/** model에 sceneList가 있는경우 */
-				var sceneList = model.get("sceneList");
+				var sceneList = attrs.sceneList;
 
 				if(sceneList instanceof SceneList) {
 					/** Backbone.Collection(SceneList) type일 경우는 그냥 변경하면 된다. */

@@ -39,103 +39,12 @@ define([
 		className: "object",
 
 		initialize: function () {
-			myLogger.trace("BaseObjectView - init");
-			/**
-			 * @link http://ignitersworld.com/lab/contextMenu.html#intro
-			 */
-			this.objectContextMenus = [
-				{
-					name: "내 컨텐츠 추가", /* img: "delete",*/
-					title: "create my contents",
-					fun: _.bind(this.addMyContents, this)
-				},
-				{
-					name: "삭제",
-					fun: _.bind(this.deleteObject, this)
-				},
-				{
-					name: "잘라내기",
-					func: this.cutObject
-				},
-				{
-					name: "복사",
-					func: this.copyObject
-				},
-				{
-					name: "붙여넣기",
-					func: this.pasteObject
-				},
-				{
-					name: "맨 앞으로",
-					func: this.moveForegroundObject
-				},
-				{
-					name: "앞으로",
-					func: this.moveForwardObject
-				},
-				{
-					name: "맨 뒤로",
-					func: this.moveBackgroundObject
-				},
-				{
-					name: "뒤로",
-					func: this.moveBackwardObject
-				},
-				{
-					name: "크기, 위치 수정",
-					func: this.editSizePositionObject
-				},
-				{
-					name: "도형 서식",
-					func: this.editShapeObject
-				}
-			];
-
-			this.contextMenuOptions = {
-				//containment: "document",     // context menu가 보여지는 범위가 어디까지인가?
-				displayAround: "cursor",
-				horAdjust: 0,
-				left: "auto",
-				mouseClick: "right",
-				position: "auto",
-				sizeStyle: "auto",
-				top: "auto",
-				triggerOn: "click",
-				verAdjust: 0
-			}
+			myLogger.trace("BaseObjectView - initialize");
 		},
 
 		// "render" / onRender - after everything has been rendered
 		onRender: function (v) {
-			// 좀비뷰가 되지 않기 위해서는 draggable, resizable event를 삭제해야함.
-			this.$el.resizable({
-				handles: "all",
-				create: function () {
-					$(this).find(".ui-resizable-handle").addClass("hide");
-				}
-			})
-				// handle을 사용해도 될 것 같음
-				.draggable({
-					opacity: 0.35
-				});
-
-			/** widget에 직접 접근해서 많은 데이터를 가져오는 것 보다는 필요한 데이터를 간단하게
-			 * 명시한 후에 작성하는게 좋을 것 같아서 attr에 표기를 하였음.
-			 */
-			this.$el.attr({
-				'data-x': this.model.get("left"),
-				'data-y': this.model.get("top"),
-				'data-width': this.model.get("width"),
-				'data-height': this.model.get("height")
-			})
-				.css({
-					top: this.model.get("top"),
-					left: this.model.get("left"),
-					width: this.model.get("width"),
-					height: this.model.get("height"),
-					position: "absolute"
-				});
-
+			// 좀비뷰가 되지 않기 위해서는 custom event를 삭제해야함.
 			myLogger.trace("BaseObjectView - onRender");
 		},
 
@@ -147,28 +56,10 @@ define([
 
 		/** modify selectable variable, preview image */
 		onDomRefresh: function () {
-			var pos = this.$el.offset();
-			this.$el.data("selectable-item", {
-				element: this.el,
-				$element: this.$el,
-				left: pos.left,
-				top: pos.top,
-				right: pos.left + this.$el.outerWidth(),
-				bottom: pos.top + this.$el.outerHeight(),
-				startselected: false,
-				selected: this.$el.hasClass("ui-selected"),
-				selecting: this.$el.hasClass("ui-selecting"),
-				unselecting: this.$el.hasClass("ui-unselecting")
-			})
-				.addClass("ui-selectee");
-
 			myLogger.trace("BaseObjectView - onDomRefresh");
 		},
 
 		onBeforeDestroy: function () {
-			this.$el.contextMenu('destroy');
-			this.$el.resizable("destroy").draggable("destroy");
-
 			myLogger.trace("BaseObjectView - onBeforeDestroy");
 		},
 

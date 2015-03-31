@@ -13,6 +13,8 @@ requirejs.config({
 		marionette: 'lib/backbone.marionette',
 		radio: 'lib/backbone.radio',
 
+		fabric: 'lib/fabric.require',
+
 		tpl: 'lib/tpl',
 		// external library
 

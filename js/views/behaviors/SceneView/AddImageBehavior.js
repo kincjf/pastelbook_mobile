@@ -14,7 +14,7 @@ define([
   return Marionette.Behavior.extend({
      defaults: {
         type: 'image',
-        imgSrc: "./img/dummy/dummy.png"
+        imgSrc: "./image/dummy.png"
      },
 
      onAddImage: function (imageOptions) {
@@ -25,14 +25,14 @@ define([
          */
         this.view.collection.push({
            type: this.options.type,
-           imgSrc: imageOptions.imgSrc,
-           top: imageOptions.top,     // x
-           left: imageOptions.left,     // y
+           src: imageOptions.imgSrc,
+           top: imageOptions.top,     // y
+           left: imageOptions.left,     // x
            width: imageOptions.width,
            height: imageOptions.height
         });
 
-        pb.app_tool.vent.trigger("save:thumbnail", this.view.sceneViewSet);
+        //pb.app_tool.vent.trigger("save:thumbnail", this.view.sceneViewSet);
      }
   });
 });

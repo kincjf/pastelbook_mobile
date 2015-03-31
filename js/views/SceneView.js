@@ -9,6 +9,7 @@
 define([
 	'marionette',
 	'radio',
+	'fabric',
 	'pb_templates',
 	'js/views/object/ImageView',
 	'js/views/object/TextBoxView',
@@ -16,7 +17,7 @@ define([
 	'js/views/behaviors/SceneView/AddTextBoxBehavior',
 	'js/common/CustomError'
 
-], function (Marionette, Radio, templates,
+], function (Marionette, Radio, fabric, templates,
              ImageView, TextBoxView,
              AddImageBehavior, AddTextBoxBehavior,
 				 CustomError) {
@@ -29,7 +30,7 @@ define([
 
 		ui: {
 			scene: '.scene',
-			canvas: 'canvas'
+			canvas: '.picture-board'
 		},
 
 		events: {
@@ -37,7 +38,7 @@ define([
 
 		/** 기존 legacy API method : itemViewContainer*/
 		/** http://marionettejs.com/docs/marionette.compositeview.html#modelevents-and-collectionevents 참조*/
-		childViewContainer: "@ui.scene",
+		childViewContainer: "@ui.canvas",
 		/** trigger와 event가 동시에 작동하지 않는 것 같음.
 		 */
 //	  triggers: {
@@ -70,12 +71,12 @@ define([
 				at: options.index
 			});
 
-			/** click : selectScenePreview */
-			this.comply(pb.event.change.currentScene.default, this.renderCurrentScene);
+			this.comply(pb.event.change.currentScene.default, this.setCurrentScene);
+			this.comply(pb.event.change.currentScene.default, this.setCurrentScene);
 
-			/** 이미지, 가로 텍스트박스, 비디오 추가 */
+			/** 이미지, 텍스트박스 추가 */
 			this.comply(pb.event.add.object.image.default + " "
-				+ pb.event.add.object.textbox.default, this.setupForInsertObjectByClick, this);
+				+ pb.event.add.object.textbox.default, this.setupForInsertObject, this);
 
 			/** sceneView를 등록하고 viewSet에 알림. */
 			this.sceneViewSet.set("sceneView", this, {
@@ -114,7 +115,8 @@ define([
 			myLogger.trace("SceneView - childViewOptions");
 
 			return {
-				sceneViewSet: this.sceneViewSet
+				sceneViewSet: this.sceneViewSet,
+				canvas: this.canvas
 			}
 		},
 
@@ -132,18 +134,20 @@ define([
 		// Marionette Override Methods
 
 		onBeforeRender: function(){
-
 		},
 
 		onRender: function (event, ui) {
 			myLogger.trace("SceneView - onRender");
-			this.renderCurrentScene();
-
-
+			this.setCurrentScene();
 		},
 
 		onShow: function () {
 			myLogger.trace("SceneView - onShow");
+			this.canvas = new fabric.Canvas(this.ui.canvas[0]);
+			this.setupForInsertObject({
+				type: 'image',
+				imgSrc: './test/image/my-image.jpg'
+			});      // for test
 		},
 
 		/**
@@ -151,52 +155,32 @@ define([
 		 * 2. sceneView의 reference 삭제 */
 		onDestroy: function() {
 			myLogger.trace("SceneCompositeView - onBeforeDestroy");
-			this.ui.scene.droppable("destroy").selectable("destroy");
 			this.sceneViewSet.set("sceneView", null, {
 				action: pb.value.FLAG.REMOVE
 			});
 		},
+		//
+		///** ui.selected - BaseObject.$el */
+		//setupForSelectBaseObjectView: function (event, ui) {
+		//	myLogger.trace("sceneView - setupForSelectBaseObjectView");
+		//},
+		//
+		///** ui.unselected - BaseObject.$el */
+		//setupForUnselectBaseObjectView: function (event, ui) {
+		//	$(ui.unselected).find(".ui-resizable-handle")
+		//		.addClass("hide")
+		//		.trigger("unselected:baseobject");
+		//	myLogger.trace("sceneView - setupForUnselectBaseObjectView");
+		//},
 
-		/** ui.selected - BaseObject.$el */
-		setupForSelectBaseObjectView: function (event, ui) {
-			$(ui.selected).find(".ui-resizable-handle")
-				.removeClass("hide")
-				.trigger("selected:baseobject");
-			myLogger.trace("sceneView - setupForSelectBaseObjectView");
-		},
-
-		/** ui.unselected - BaseObject.$el */
-		setupForUnselectBaseObjectView: function (event, ui) {
-			$(ui.unselected).find(".ui-resizable-handle")
-				.addClass("hide")
-				.trigger("unselected:baseobject");
-			myLogger.trace("sceneView - setupForUnselectBaseObjectView");
-		},
-
-
-		/////////////////////////////
-		renderCurrentScene: function (isReset) {
+		setCurrentScene: function (isReset) {
 			myLogger.trace("SceneView - renderCurrentScene");
 
-			if(this.isReset) {      // 초기 로딩중인가?
-				if(this.model.get("previewScene")) {
-					pb.current.scene = this;
-				} 	// no-if : 대표로 지정된 Scene이 아님
-			} else {
-				if (pb.current.scene) {    // 기존 Scene이 존재하는가?
-					pb.current.scene.$el.hide();
-				} 	// no-if : loading(reset)일 경우 제일 처음 Scene에 focus를 맞춤
+			if (pb.current.scene) {    // 기존 Scene이 존재하는가?
+				pb.current.scene.$el.hide();
+			} 	// no-if : loading(reset)일 경우 제일 처음 Scene에 focus를 맞춤
 
-				pb.current.scene = this;
-				pb.current.scene.$el.show();
-			}
-
-			// selectedBaseObject 초기화
-			//pb.current.selectedBaseObjectView.command("clear:container");
-			/** initialize에 하려고 했으나, 의미상 현재 선택된 Scene이기 때문에
-			 * loading시(reset)과 add시 current.scene 설정을 구분해야함.
-			 * - add시에는 삽입된 scene에 focus를 맞추면 되지만, loading은 처음 슬라이드를 기준으로 함.
-			 */
+			pb.current.scene = this;
 		},
 
 		// Custom Methods
@@ -207,61 +191,24 @@ define([
 		 * - 때문에 그냥 스크린 중간에 표시하는걸로 하는것이 모바일 상에서도 좋을 것 같음
 		 * ==> 그래서 그냥 1/3 지점에 바로 들어가게 구현함
 		 * */
-		setupForInsertObjectByClick: function (options) {
+		setupForInsertObject: function (options) {
 			var objectOptions = {
-				top: pb.ui.dlg_current_scene.h / 3,
-				left: pb.ui.dlg_current_scene.w / 3
+				top: 100,
+				left: 100
 			};
 
 			if (options.type == "image") {
 				// dummy를 이용한 naturalSize 측정
-				pb.dummy.src = options.imgSrc;
 
 				_.extend(objectOptions, {
-					width: pb.dummy.width,
-					height: pb.dummy.height,
+					width: 100,     // for test
+					height: 100,   // for test
 					imgSrc: options.imgSrc
 				});
 				this.triggerMethod("AddImage", objectOptions);
 			}
 			else if (options.type == "textbox") {
 				this.triggerMethod("AddTextBox", objectOptions);
-			}
-			else if (options.type == "video") {
-				_.extend(objectOptions, {
-					videoSrc: options.videoSrc,
-					videoPreviewImage: options.videoPreviewImage,
-					width: 640,
-					height: 480
-				});
-				this.triggerMethod("AddVideo", objectOptions);
-			}
-		},
-
-		setupForInsertObjectByDrop: function (event, ui) {
-			myLogger.trace("SceneView - addObject");
-
-			var $baseObject = $(ui.draggable.context);
-			var type = $baseObject.attr('type');
-			var objectOptions = {
-				top: ui.position.top,
-				left: ui.position.left
-			};
-
-			if (type == "image") {
-				var imageSrc = $baseObject.attr('src'),
-					naturalWidth = $baseObject[0].naturalWidth,
-					naturalHeight = $baseObject[0].naturalHeight
-
-				_.extend(objectOptions, {
-					width: naturalWidth,
-					height: naturalHeight,
-					imgSrc: imageSrc
-				});
-
-				/* The on{Name} callback methods will still be called
-				 * ex) AddImage -> this.triggerMethod("AddImage") -> triggers on{AddImage} */
-				this.triggerMethod("AddImage", objectOptions);
 			}
 		}
 	})

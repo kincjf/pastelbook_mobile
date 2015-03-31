@@ -16,7 +16,7 @@ define([
 		defaults: {
 		},
 
-		initialize: function (model, options) {
+		initialize: function (attrs, options) {
 			myLogger.trace('Scene - initialize');
 
 			/** {@link http://backbonejs.org/#Model-constructor
@@ -24,10 +24,10 @@ define([
 			* 자동으로 생성됨
 			*/
 
-			if (!model.has('baseObjectList')) {
+			if (!_.has(attrs, 'baseObjectList')) {
 				this.set('baseObjectList', new BaseObjectList());
 			} else {
-				var baseObjectList = model.get('baseObjectList');
+				var baseObjectList = attrs.baseObjectList;
 
 				if (baseObjectList instanceof BaseObjectList) {
 					/** Backbone.Collection(BaseObjectList) type일 경우는 그냥 변경하면 된다. */
