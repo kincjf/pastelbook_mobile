@@ -1,0 +1,39 @@
+{
+  "objects": [
+    {
+      "type": "image",
+      "originX": "left",
+      "originY": "top",
+      "left": 1.99,
+      "top": -16.89,
+      "width": 306,
+      "height": 306,
+      "fill": "rgb(0,0,0)",
+      "stroke": null,
+      "strokeWidth": 1,
+      "strokeDashArray": null,
+      "strokeLineCap": "butt",
+      "strokeLineJoin": "miter",
+      "strokeMiterLimit": 10,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0,
+      "flipX": false,
+      "flipY": false,
+      "opacity": 1,
+      "shadow": null,
+      "visible": true,
+      "clipTo": null,
+      "backgroundColor": "",
+      "fillRule": "nonzero",
+      "globalCompositeOperation": "source-over",
+      "src": "file:///C:/Users/KIMSEONHO/Desktop/%ED%8C%8C%EC%8A%A4%ED%85%94%EB%B6%81/%EA…EC%9E%90%EB%A3%8C(PastelBook)/%EA%B0%9C%EB%B0%9C/sumin_150326/my-image.jpg",
+      "filters": [],
+      "crossOrigin": "",
+      "alignX": "none",
+      "alignY": "none",
+      "meetOrSlice": "meet"
+    }
+  ],
+  "background": ""
+}

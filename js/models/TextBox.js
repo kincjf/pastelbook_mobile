@@ -1,9 +1,7 @@
-/*global define */
+/* global define */
 /**
+ * TextBox 구성에 필요한 fabric object형 데이터
  * Created by KIMSEONHO
- *
- * 추가요소 - TextBox
- *
  */
 define([
 	'backbone',
@@ -13,20 +11,11 @@ define([
 
 	return BaseObject.extend({
 		defaults: {
-			type: 'textbox',
-			htmlString: ''
 		},
 
-		/** backend(REST DB)와 통신하기 위해서 기본 식별자 지정 */
-		idAttribute: "_id",
-
 		initialize: function (attrs, options) {
+			myLogger.trace('TextBox - initialize');
 			BaseObject.prototype.initialize.call(this, options);
-			myLogger.trace('TextBox - init');
-
-			if (!_.has(attrs, "_id")) {
-				this.set('_id', this.cid);
-			}
 		}
 	});
 });

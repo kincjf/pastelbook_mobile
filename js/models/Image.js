@@ -1,10 +1,8 @@
 /*global define */
 /**
+ * Image를 구성하는 fabric object형 데이터
+ *
  * Created by KIMSEONHO
- *
- * Image를 구성하는 Model
- * -
- *
  */
 define([
 	'backbone',
@@ -13,22 +11,14 @@ define([
 	'use strict';
 
 	return BaseObject.extend({
+		// attribute가 확정되는대로 {defaults}에 추가될 예정임
 		defaults: {
-			type: 'image',
-			imgSrc: './​img/​dummy/​dummy.png'
 		},
-		//urlRoot: 'rest/picture',
 
 		initialize: function (attrs, options) {
+			myLogger.trace('Image - initialize');
+
 			BaseObject.prototype.initialize.call(this, options);
-			
-			myLogger.trace('Image - init');
-
-			if (!_.has(attrs, "_id")) {
-				this.set('_id', this.cid);
-			}
-
-			/** collection에 별칭을 지어서 model.attributes안에 가지고 있음 */
 		}
 	});
 });

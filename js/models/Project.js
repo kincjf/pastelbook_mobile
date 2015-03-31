@@ -1,12 +1,7 @@
 /**
- * Created by KIMSEONHO on 2014-10-13.
- */
-/**
+ * [fabric canvas object 타입 array -> SceneList]와 그림판 생성정보를 가지고 있음.
+ * Save, Loading시 이용함.
  * Created by KIMSEONHO
- *
- * 프로젝트 데이터를 가지고 있는 최상위 Model
- * -
- *
  */
 define([
 	'backbone',
@@ -34,16 +29,13 @@ define([
 		/** backend(REST DB)와 통신하기 위해서 기본 식별자 지정 */
 		idAttribute: "_id",
 
-		/** custom getter/setter 사용을 위한 Backbone.Mutators
-		 * see also {@link https://github.com/asciidisco/Backbone.Mutators}
-		 */
 		/** .set을 할 경우 value가 할당되고 난 후에 change event가 발생한다.
 		 * validate도 마찬가지
 		 * 값이 할당되기 전에 handling을 하려면 save/set을 override 해야함.
 		 */
 
-		initialize: function (attributes, options) {
-			myLogger.trace('Project - init');
+		initialize: function (model, options) {
+			myLogger.trace('Project - initialize');
 
 			_.extend(this, Radio.Commands);
 			/** listenTo : 다른 객체에 걸려있는 이벤트를 감지함.
@@ -59,7 +51,7 @@ define([
 			 * 2. createDate, modifyDate 생성
 			 * 3. sceneList 초기화
 			 */
-			if (!_.has(attributes, "_id")) {
+			if (!_.has(model, "_id")) {
 				this.set('_id', this.cid);
 			}
 
@@ -67,31 +59,26 @@ define([
 			this.set('createDate', initDate);
 			this.set('modifyDate', initDate);
 
-			if (!_.has(attributes, "sceneList")) {
-				/** attr에 sceneList가 없을경우 */
+			if (!model.has("sceneList")) {
 				this.set('sceneList', new SceneList());
 			} else {
-				/** attr에 sceneList가 있는경우 */
-				var _sceneList = attributes.sceneList;
+				/** model에 sceneList가 있는경우 */
+				var sceneList = model.get("sceneList");
 
-				if(_sceneList instanceof SceneList) {
+				if(sceneList instanceof SceneList) {
 					/** Backbone.Collection(SceneList) type일 경우는 그냥 변경하면 된다. */
-					this.set('sceneList', _sceneList);
+					this.set('sceneList', sceneList);
 				} else {
 					/** 하지만 그냥 array type일 경우 wrapping을 해주어야한다. */
-					this.set('sceneList', new SceneList(_sceneList));
+					this.set('sceneList', new SceneList(sceneList));
 				}
 			}
 
 			/** 무한루프에 걸릴 수 있기 때문에 event binding을 아래쪽에 배치해야함
 			 * 아니면 reset event를 만들고 로딩을 할 때 trigger를 하는 방법이 있음.
 			 */
-				this.comply("save:project", this.saveProject, this);
+				//this.comply("save:project", this.saveProject, this);
 		}   // end initialize
-
-		/** .set('attrName', data, options)
-		 * 정보가 바뀌면 change event 발생
-		 */
 
 		/** .reset - 데이터를 넣으면 tree structured data를 알아서 binding함.
 		 * 음 신기하군.. 로딩은 이게 다임.

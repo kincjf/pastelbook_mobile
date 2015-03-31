@@ -2,11 +2,10 @@
 /**
  * Created by KIMSEONHO
  *
- * Object들을 저장하는 Collection
+ * fabric 형태의 Object들을 저장하는 Collection
  *
  */
 define([
-	'radio',
 	'js/models/Image',
 	'js/models/TextBox',
 	'js/models/Shape',
@@ -39,23 +38,7 @@ define([
 		},
 
 		initialize: function(models, options) {
-			myLogger.trace('BaseObjectList - init');
-			_.extend(this, Radio.Commands);
-
-			/** BaseObjectList 안에 있는 각 BaseObject들의 z-index 값을 지정하는
-			 * Scene내 Global 변수
-			 */
-			this.z_index = 10000;
-
-			this.comply('add:z_index:+1', function(args) {
-				++this.z_index;
-			}, this);
-			this.on('remove', function() {
-				--this.z_index;
-			}, this);
-			this.on('reset', function() {
-				this.z_index = 10000;
-			}, this);
+			myLogger.trace('BaseObjectList - initialize');
 		}
 	});
 });
