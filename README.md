@@ -12,11 +12,7 @@ wiki에 적은 후 추가할 점이나 지울 점, 변경할 점이 있으면 �
 ___
 
 ## naming
-* test를 위한 resource 경로 : [ http://hitit.jbnu.ac.kr/resources/ ]
-
-* pastelbook => pb로 줄일것
-
-* 파일명으로 쓰임새를 구분하기 보다는 폴더구조로 구분하고, 파일명은 모듈이 하는 동작으로만 지을 것
+* [data-role=page]은 메인 html파일에 선언, 내부 템플릿은 .tpl에 선언하여 관리, popup은 .tpl 내에 선언, panel은 해당 page내에 선언
 
 * model 선언시 : Project, Scene와 같이 선언
 

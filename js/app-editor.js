@@ -55,7 +55,7 @@ define([
 		collection: sceneList
 	});
 
-	// HeaderView
+	var headerView = new HeaderView();    	// HeaderView
 	// FooterView
 	// ImageListView
 	// EditView
@@ -83,13 +83,15 @@ define([
 	});
 
 	app_editor.addInitializer(function (options) {
+		app_editor.sceneCompositeView.show(sceneCompositeView);
+		//app_editor.currentScenePreview.show(scenePreviewCompositeView);
+
+		app_editor.headerView.show(headerView);
+
 		/** Scene이 처음에 하나는 있어야 되기 때문에 */
 		sceneList.push({
 			previewScene: true
 		});
-
-		app_editor.sceneCompositeView.show(sceneCompositeView);
-		//app_editor.currentScenePreview.show(scenePreviewCompositeView);
 	});
 
 	app_editor.addInitializer(function (options) {
