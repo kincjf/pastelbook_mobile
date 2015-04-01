@@ -17,13 +17,12 @@ define([
 			"": "home",
 
 			// When #category? is on the url, the category method is called
-			"category?:type": "category"
+			":type": "category"
 		},
 
 		initialze: function (options) {
 			myLogger.trace("MobileRouter - initialize");
 			// Tells Backbone to start watching for hashchange events
-			Backbone.history.start();
 		},
 
 		// Home method

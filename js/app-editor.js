@@ -21,12 +21,14 @@ define([
 	'js/views/HeaderView',
 	'js/views/FooterView',
 	'js/views/ImageListView',
-	'js/views/EditView'
+	'js/views/EditView',
+	'js/routers/MobileRouter'
 ], function (Marionette,
              Project,
              SceneList, SceneViewSetList,
              SceneCompositeView, ScenePreviewCompositeView,
-				 HeaderView, FooterView, ImageListView, EditView) {
+				 HeaderView, FooterView, ImageListView, EditView,
+				 MobileRouter) {
 	'use strict';
 
 	var app_editor = new Marionette.Application();
@@ -136,6 +138,11 @@ define([
 		//	pb.util.captureController.capturePreview(sceneView.$el, sceneViewSet);
 		//});
 
+	});
+
+	app_editor.addInitializer(function (options) {
+		this.router = new MobileRouter();
+		Backbone.history.start();
 	});
 
 	return app_editor;

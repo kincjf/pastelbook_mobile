@@ -108,6 +108,7 @@ define([
 		},
 
 		/**
+		 * model - BaseObject
 		 * Object 수정,삭제 후 .command('change:thumbnail')을 수행하기 위해서
 		 * option으로 sceneViewSet을 전달함.
 		 */

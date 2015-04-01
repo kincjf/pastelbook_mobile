@@ -41,7 +41,7 @@ define([
 //		events: {
 //      'click #add_slide': 'addSlide'
 //		},
-		/** options : instance 초기화시 받은 parameter object */
+		/** options : instance 초기화시 받은 parameter object*/
 		initialize: function (options) {
 			myLogger.trace("SceneCompositeView - initialize");
       },

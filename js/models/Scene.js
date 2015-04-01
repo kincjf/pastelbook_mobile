@@ -14,6 +14,7 @@ define([
 		//	localStorage: new Backbone.LocalStorage('pb-scene'),
 		// objects, background
 		defaults: {
+			previewScene: false
 		},
 
 		initialize: function (attrs, options) {
