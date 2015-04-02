@@ -52,7 +52,9 @@ define([
 	var scenePreviewCompositeView = new ScenePreviewCompositeView({
 		collection: sceneList
 	});
-
+	
+	var footerview = new FooterView();
+	
 	// HeaderView
 	// FooterView
 	// ImageListView
@@ -87,6 +89,7 @@ define([
 		});
 
 		app_editor.sceneCompositeView.show(sceneCompositeView);
+		app_editor.footerView.show(footerview);
 		//app_editor.currentScenePreview.show(scenePreviewCompositeView);
 	});
 
