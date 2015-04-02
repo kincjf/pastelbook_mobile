@@ -21,12 +21,14 @@ define([
 	'js/views/HeaderView',
 	'js/views/FooterView',
 	'js/views/ImageListView',
-	'js/views/EditView'
+	'js/views/EditView',
+	'js/routers/MobileRouter'
 ], function (Marionette,
              Project,
              SceneList, SceneViewSetList,
              SceneCompositeView, ScenePreviewCompositeView,
-				 HeaderView, FooterView, ImageListView, EditView) {
+				 HeaderView, FooterView, ImageListView, EditView,
+				 MobileRouter) {
 	'use strict';
 
 	var app_editor = new Marionette.Application();
@@ -53,10 +55,8 @@ define([
 		collection: sceneList
 	});
 	
-	var footerview = new FooterView();
-	
-	// HeaderView
-	// FooterView
+	var headerView = new HeaderView();    	// HeaderView
+	var footerview = new FooterView();		// FooterView
 	// ImageListView
 	// EditView
 
@@ -83,13 +83,17 @@ define([
 	});
 
 	app_editor.addInitializer(function (options) {
+		app_editor.sceneCompositeView.show(sceneCompositeView);
+		//app_editor.currentScenePreview.show(scenePreviewCompositeView);
+
+		app_editor.headerView.show(headerView);
+		app_editor.footerView.show(footerview);
+
 		/** Scene이 처음에 하나는 있어야 되기 때문에 */
 		sceneList.push({
 			previewScene: true
 		});
 
-		app_editor.sceneCompositeView.show(sceneCompositeView);
-		app_editor.footerView.show(footerview);
 		//app_editor.currentScenePreview.show(scenePreviewCompositeView);
 	});
 
@@ -139,6 +143,11 @@ define([
 		//	pb.util.captureController.capturePreview(sceneView.$el, sceneViewSet);
 		//});
 
+	});
+
+	app_editor.addInitializer(function (options) {
+		this.router = new MobileRouter();
+		Backbone.history.start();
 	});
 
 	return app_editor;

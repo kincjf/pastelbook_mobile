@@ -66,6 +66,9 @@ define([
 			//this.canvas.add(this.image);
 
 			var that = this;
+
+			// url 설정시 raw data도 되고, web image도 되는듯 하다.
+			// test를 위해서 일단 임시 이미지를 하나 등록해놓음
 			fabric.Image.fromURL('./test/image/my-image.jpg', function(imgInstance) {
 				that.image = imgInstance;
 

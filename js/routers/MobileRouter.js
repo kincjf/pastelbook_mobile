@@ -1,4 +1,6 @@
 /**
+ * - 현재는 [data-role="page, panel"]에 대해서만 Routing이 적용된다
+ * - popup은 잘 모르겠음..
  * Created by KIMSEONHO on 2015-01-16.
  */
 
@@ -17,13 +19,12 @@ define([
 			"": "home",
 
 			// When #category? is on the url, the category method is called
-			"category?:type": "category"
+			":type": "category"
 		},
 
 		initialze: function (options) {
 			myLogger.trace("MobileRouter - initialize");
 			// Tells Backbone to start watching for hashchange events
-			Backbone.history.start();
 		},
 
 		// Home method

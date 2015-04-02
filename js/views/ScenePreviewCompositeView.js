@@ -19,7 +19,7 @@ define([
 	'pb_templates',
 	'js/views/ScenePreviewView',
 	'js/collections/BaseObjectList'
-], function (Marionette, templates, ScenePreviewView, BaseObjectList) {
+], function (Marionette, templates, ScenePreviewView) {
 	'use strict';
 
 	return Marionette.CompositeView.extend({

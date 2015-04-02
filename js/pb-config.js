@@ -71,7 +71,7 @@ requirejs.config({
 });
 
 // Includes File Dependencies
-require([ "jquery", "backbone", "js/routers/MobileRouter" ], function( $, Backbone, MobileRouter ) {
+require([ "jquery", "backbone"], function( $, Backbone ) {
 	$( document ).on( "mobileinit",
 		// Set up the "mobileinit" handler before requiring jQuery Mobile's module
 		function() {
@@ -87,8 +87,6 @@ require([ "jquery", "backbone", "js/routers/MobileRouter" ], function( $, Backbo
 		/** 초기 데이터 구조 형성과 초기화에 필요한 로딩을 담당함.*/
 		pb.app_editor = app_editor;
 		pb.app_editor.start(); // Application start
-
-		new MobileRouter();
 
 		myLogger.trace("pb_app_editor loading Complete");
 
