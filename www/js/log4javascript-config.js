@@ -33,6 +33,6 @@ myLogger.addAppender(popUpAppender);
 myLogger.setLevel(log4javascript.Level.TRACE);
 
 /** logging을 하기 싫으면 아래의 주석을 지우면 됨 */
-//myLogger.setLevel(log4javascript.Level.OFF);
+myLogger.setLevel(log4javascript.Level.OFF);
 
 myLogger.info("log4javascript initialize");
