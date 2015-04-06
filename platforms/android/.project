@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>PastelBook</name>
+	<name>PastelBook_mobile</name>
 	<comment></comment>
 	<projects>
 		<project>CordovaApp-CordovaLib</project>

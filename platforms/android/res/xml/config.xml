@@ -24,6 +24,6 @@
     <author email="dev@cordova.apache.org" href="http://cordova.io">
         Apache Cordova Team
     </author>
-    <content src="cameraTest.html" />
+    <content src="editor.html" />
     <access origin="*" />
 </widget>
