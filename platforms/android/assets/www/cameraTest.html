@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Capture Photo</title>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="lib/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="lib/fabric.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="js/cameraTest.js"></script>
+
+</head>
+<body>
+<button onclick="capturePhoto();">Capture Photo</button>
+<br>
+<button onclick="capturePhotoEdit();">Capture Editable Photo</button>
+<br>
+<button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button>
+<br>
+<button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From Photo Album</button>
+<br>
+<button onclick="getMultiPhoto(pictureSource.SAVEDPHOTOALBUM);">Select Multi Image From Photo Album </button>
+<br>
+<img style="display:none;width:60px;height:60px;" id="smallImage" src=""/>
+<img style="display:none;" id="largeImage" src=""/>
+<canvas id="mycanvas" width="960" height="540">
+    This browser is not supported HTML5 canvas
+</canvas>
+</body>
+</html>
