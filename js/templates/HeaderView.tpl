@@ -1,10 +1,11 @@
-<div data-role="navbar" data-grid="c">
+<div data-role="navbar" >
     <ul>
         <li><a href="#scene_preview_panel"class="ui-btn-active">Scene 관리</a></li>
         <li><a data-behavior="openAddTextPopup" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">글 추가</a></li>
         <li><a data-behavior="openAddImagePopup" data-rel="popup"
                class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-bars ui-btn-icon-left ui-btn-b"
                data-transition="pop">사진 추가</a></li>
+        <li><a href="#edit_detail" class="ui-shadow ui-btn ui-corner-all ui-btn-inline" data-transition="slidedown">편집</a></li>
         <li><a href="#save_share" class="ui-shadow ui-btn ui-corner-all ui-btn-inline" data-transition="slidedown">저장&공유</a></li>
     </ul>
 </div><!-- /navbar -->

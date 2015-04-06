@@ -5,8 +5,8 @@
  */
 define([
 	'marionette',
-	'pb_templates'
-], function (Marionette, templates) {
+	'pb_templates','jquery'
+], function (Marionette, templates,jqeury) {
 	'use strict';
 
 	var HeaderView = Marionette.ItemView.extend({

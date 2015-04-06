@@ -72,8 +72,6 @@ define([
 			fabric.Image.fromURL('./test/image/my-image.jpg', function(imgInstance) {
 				that.image = imgInstance;
 
-				pb.current.object = that;		// for filter, modify test
-				
 				that.image.on(pb.event.selected.default, _.bind(function(event) {
 					// 현재 선택된 object(view)를 지정함 (mobile버전 : 하나만 선택할 수 있음)
 					pb.current.object = that;

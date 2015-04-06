@@ -9,7 +9,7 @@
  *
  */
 define([
-	'backbone',
+    'backbone',
 	'js/models/SceneViewSet'
 ], function (Backbone, SceneViewSet) {
 	'use strict';

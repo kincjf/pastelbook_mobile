@@ -23,6 +23,7 @@ define(function (require) {
 		ScenePreviewView: require('tpl!js/templates/ScenePreviewView.tpl'),
 
 		ImageView: require('tpl!js/templates/ImageView.tpl'),
-		TextBoxView: require('tpl!js/templates/TextBoxView.tpl')
+		TextBoxView: require('tpl!js/templates/TextBoxView.tpl'),
+		EditView: require('tpl!js/templates/EditView.tpl')
 	};
 });

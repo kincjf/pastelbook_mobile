@@ -28,7 +28,10 @@ define(['marionette','pb_templates','lightSlider'], function (Marionette ,templa
 	       
 	        });
 
-
+		
+	//var filterimg = pb.current.object.image;
+		//$('.Filter-Image').attr("src",filterimg);
+	
 		//캔버스에 잇는 이미지 필터이미지로 가저오기
 		
 	

@@ -57,8 +57,9 @@ define([
 	
 	var headerView = new HeaderView();    	// HeaderView
 	var footerview = new FooterView();		// FooterView
+	var editView = new EditView();			// EditView
 	// ImageListView
-	// EditView
+	
 
 	/** event driven message passing을 위한 Backbone.Radio
 	 * 현재는 global로 관리를 하지만, app이 커질 경우 차후에는 event 종류별로
@@ -88,7 +89,7 @@ define([
 
 		app_editor.headerView.show(headerView);
 		app_editor.footerView.show(footerview);
-
+		app_editor.editView.show(editView);
 		/** Scene이 처음에 하나는 있어야 되기 때문에 */
 		sceneList.push({
 			previewScene: true
