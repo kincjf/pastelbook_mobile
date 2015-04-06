@@ -27,13 +27,16 @@ define([
 		tagName: 'section',   // default div
 		className: 'scene-wrap',
 		template: templates.SceneView,
+		count : 1 , 
 
 		ui: {
+		
 			scene: '.scene',
 			canvas: '.picture-board'
 		},
 
 		events: {
+			'click #img-filter': 'clickButton'
 		},
 
 		/** 기존 legacy API method : itemViewContainer*/
@@ -211,6 +214,21 @@ define([
 			else if (options.type == "textbox") {
 				this.triggerMethod("AddTextBox", objectOptions);
 			}
-		}
+		},
+			
+		clickButton: function() {
+		//	this.imgGet();
+			if(this.count ==1 ){
+				$('#editor_main_footer').hide();
+				this.count = 2 ;
+			}
+			else if(this.count == 2){
+				$('#editor_main_footer').show();
+				
+				this.count = 1 ;
+				}
+		},
+		
+	
 	})
 });
