@@ -25,7 +25,7 @@ define([
 
 		/** CompositeView에서는 무조건 template을 써야되는 듯함. */
 		/** itemView에서는 잘 모르겠음. */
-      template: templates.SceneCompositeView,
+		template: templates.SceneCompositeView,
 
 		/** 기존 legacy API method : itemView, itemViewContainer */
 		childView: SceneView,
@@ -35,28 +35,31 @@ define([
 		className: 'scene-wrap',
 
 		ui: {
-			//scenes: '#dlg_current_scene'
+			editButtonGroup: 'div[data-role="controlgroup"]',
+			applyFilterButton: 'a[data-behavior="applyFilter"]',
+			deleteObjectButton: 'a[data-behavior="deleteObject"]'
 		},
 
-//		events: {
-//      'click #add_slide': 'addSlide'
-//		},
+		events: {
+			'tap @ui.applyFilterButton': 'openApplyFilterToolbar',
+			'tap @ui.deleteObjectButton': 'deleteObject'
+		},
 		/** options : instance 초기화시 받은 parameter object*/
 		initialize: function (options) {
 			myLogger.trace("SceneCompositeView - initialize");
-      },
+		},
 
 		/** it does passing parameter, childView initialize(_options)
 		 * ex) _options : {collection, index}
 		 */
 		/** model - Scene, collection - baseObjectList */
-		childViewOptions: function(model, index) {
+		childViewOptions: function (model, index) {
 			myLogger.trace("SceneCompositeView - childViewOptions");
 
 			var baseObjectList = model.get('baseObjectList');
 
 			/** 초기 로딩시 로딩데이터는 원시 array이기 때문에 custom collection으로 wrapping을 함*/
-			if( !(baseObjectList instanceof BaseObjectList) ) {
+			if (!(baseObjectList instanceof BaseObjectList)) {
 				BaseObjectList = new BaseObjectList(baseObjectList);
 			}
 
@@ -73,9 +76,12 @@ define([
 
 		onRender: function () {
 			myLogger.trace("SceneCompositeView - onRender");
+			this.ui.editButtonGroup.controlgroup({
+				defaults: true
+			});
 		},
 
-		onShow: function() {
+		onShow: function () {
 			myLogger.trace("SceneCompositeView - onShow");
 		},
 
@@ -84,12 +90,17 @@ define([
 		 * 2. 맨 처음 Scene일때 - 다음
 		 * 3. Scene이 중간지점일때
 		 * 4. 마지막 Scene일때 */
-		onBeforeRemoveChild: function(childView){
+		onBeforeRemoveChild: function (childView) {
 			// work with the childView instance, here
 		},
 
-		createScene: function () {
-			myLogger.trace("SceneCompositeView - createScene");
+		deleteObject: function () {
+			myLogger.trace("SceneCompositeView - deleteObject");
+		},
+
+		openApplyFilterToolbar: function () {
+			myLogger.trace("SceneCompositeView - openApplyFilterToolbar");
+			pb.app_editor.footerView.$el.toolbar("show");
 		}
 	});
 });

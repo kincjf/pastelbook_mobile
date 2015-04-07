@@ -11,6 +11,7 @@ define(['jquery', 'marionette'], function ($, Marionette) {
 			myLogger.trace("FileController - init");
 		},
 
+
 		loadFile: function (file, target, options) {
 			var reader = new FileReader();
 
