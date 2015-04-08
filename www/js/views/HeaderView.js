@@ -21,7 +21,8 @@ define([
 		template: templates.HeaderView,
 		events: {
 			'tap @ui.addImagePopupBtn': 'openAddImagePopup',
-			'tap @ui.addTextPopupBtn': 'openAddTextPopup'
+			'tap @ui.addTextPopupBtn': 'openAddTextPopup',
+			'click #tlqkf' : 'clickShareBtn',
 		},
 
 		//className: "object",
@@ -68,7 +69,13 @@ define([
 		},
 		openAddTextPopup: function() {
 			this.ui.addTextPopup.popup("open");
-		}
+		},
+		clickShareBtn: function(){
+			alert("시부랄");
+		window.plugins.socialsharing.share(null, null, 'https://www.google.nl/images/srpr/logo4w.png' ,null);
+		
+		},
+		
 	});
 
 	return HeaderView

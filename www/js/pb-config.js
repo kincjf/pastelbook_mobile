@@ -4,6 +4,8 @@
 requirejs.config({
 	baseUrl: '.', // 로딩된 웹페이지 기준
 	paths: {
+		cordova: 'cordova',	// for mobile
+		
 		backbone: 'lib/backbone',
 		jquery: 'lib/jquery-1.11.2.min',
 		jquerymobile: 'lib/jquery.mobile-1.4.5/jquery.mobile-1.4.5',
@@ -88,9 +90,9 @@ require([ "jquery", "backbone"], function( $, Backbone ) {
 		pb.app_editor = app_editor;
 		pb.app_editor.start(); // Application start
 
-		myLogger.trace("pb_app_editor loading Complete");
+		require(["cordova"]);	// for implementation phonegap plugin
 
-		///** 요놈이 이상하게 덮어씌워짐.. 이상하게 */
-		//$(".ui-widget-overlay.ui-front").remove();
+		myLogger.trace("pb_app_editor loading Complete");
 	});
+	
 });

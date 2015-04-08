@@ -6,7 +6,8 @@
                class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-bars ui-btn-icon-left ui-btn-b"
                data-transition="pop">사진 추가</a></li>
         <li><a href="#edit_detail" class="ui-shadow ui-btn ui-corner-all ui-btn-inline" data-transition="slidedown">편집</a></li>
-        <li><a href="#save_share" class="ui-shadow ui-btn ui-corner-all ui-btn-inline" data-transition="slidedown">저장&공유</a></li>
+        <li><a class="ui-shadow ui-btn ui-corner-all ui-btn-inline" id="shareBtn" data-transition="slidedown">저장&공유</a></li>
+        <li><button id="tlqkf">공유버튼<button>
     </ul>
 </div><!-- /navbar -->
 

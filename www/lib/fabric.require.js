@@ -13543,12 +13543,12 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
    * @tutorial {@link http://fabricjs.com/fabric-intro-part-2/#animation}
    * @chainable
    *
-   * As object â€” multiple properties
+   * As object ??multiple properties
    *
    * object.animate({ left: ..., top: ... });
    * object.animate({ left: ..., top: ... }, { duration: ... });
    *
-   * As string â€” one property
+   * As string ??one property
    *
    * object.animate('left', ...);
    * object.animate('left', { duration: ... });
@@ -17351,12 +17351,19 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       }
       else {
         replacement.onload = function() {
-          _this._element = replacement;
-          !forResizing && (_this._filteredEl = replacement);
-          callback && callback();
-          replacement.onload = canvasEl = imgEl = null;
+        	/**
+			 * toDataURL() ¼öÇàÀü filter°ªÀ» Àû¿ëÇÏ±â À§ÇØ¼­
+	          _this._element = replacement;
+	          !forResizing && (_this._filteredEl = replacement);
+	          callback && callback();
+	          replacement.onload = canvasEl = imgEl = null;
+			*/
         };
         replacement.src = canvasEl.toDataURL('image/png');
+        _this._element = replacement;
+        !forResizing && (_this._filteredEl = replacement);
+        callback && callback();
+        replacement.onload = canvasEl = imgEl = null;
       }
       return canvasEl;
     },
