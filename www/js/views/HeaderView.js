@@ -72,8 +72,21 @@ define([
 		},
 		clickShareBtn: function(){
 			alert("시부랄");
-		window.plugins.socialsharing.share(null, null, 'https://www.google.nl/images/srpr/logo4w.png' ,null);
-		
+			
+			var canvas = pb.current.scene.canvas;
+		//	var image = pb.current.object.image;
+			
+			var test = canvas.toDataURL({
+				format : 'png',
+				multiplier : 1,
+				quality : 1,
+				left : canvas.item(0).left,
+				top : canvas.item(0).top,
+				width : canvas.item(0).width,
+				height : canvas.item(0).height
+			});
+			
+		window.plugins.socialsharing.share(null, null, test ,null);	//사진 공유기능	
 		},
 		
 	});
