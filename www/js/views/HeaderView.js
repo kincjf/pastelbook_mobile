@@ -5,8 +5,8 @@
  */
 define([
 	'marionette',
-	'pb_templates','jquery'
-], function (Marionette, templates,jqeury) {
+	'pb_templates','camera'
+], function (Marionette, templates,camera) {
 	'use strict';
 
 	var HeaderView = Marionette.ItemView.extend({
@@ -24,7 +24,12 @@ define([
 			'tap @ui.addTextPopupBtn': 'openAddTextPopup',
 			'click #tlqkf' : 'clickShareBtn',
 		},
-
+		onLocalAlbum:function(){
+			camera_album.getMultiPhoto();
+		},
+		onCamera:function(){
+			camera_album.capturePhoto();
+		},
 		//className: "object",
 
 		initialize: function (options) {
@@ -66,6 +71,9 @@ define([
 		// Custom Methods - Event Callback
 		openAddImagePopup: function() {
 			this.ui.addImagePopup.popup("open");
+			
+			$('#local_album').click(this.onLocalAlbum);
+			$('#camera').click(this.onCamera);
 		},
 		openAddTextPopup: function() {
 			this.ui.addTextPopup.popup("open");

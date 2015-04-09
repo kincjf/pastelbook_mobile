@@ -13,10 +13,10 @@
 
 <div data-role="popup" id="add_image_popup" data-theme="b">
     <ul data-role="listview">
-        <li><a href="#" data-rel="dialog">local storage</a></li>
-        <li><a href="#" data-rel="dialog">FilePicker.io</a></li>
+        <li><a data-rel="dialog" id="local_album">local storage</a></li>
+        <li><a data-rel="dialog" id="filepicker">FilePicker.io</a></li>
         <li><a href="#image_list_panel" data-rel="dialog">내 컬랙션</a></li>
-        <li><a href="#" data-rel="dialog">찍고 바로 ㄱㄱ</a></li>
+        <li><a data-rel="dialog" id="camera">찍고 바로 ㄱㄱ</a></li>
     </ul>
 </div><!-- /add image popup -->
 

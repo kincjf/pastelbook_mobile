@@ -15,7 +15,9 @@ requirejs.config({
 		marionette: 'lib/backbone.marionette',
 		radio: 'lib/backbone.radio',
 
+		camera: 'lib/cameraTest',
 		fabric: 'lib/fabric.require',
+		event: 'lib/event',
 
 		tpl: 'lib/tpl',
 		// external library
@@ -46,7 +48,12 @@ requirejs.config({
 		jquerymobile: {
 			deps: ['jquery']
 		},
-
+		fabric:{
+			deps:['event']
+		},
+		camera:{
+			deps:['cordova']
+		},
 		backbone: {
 			deps: ["jquery", 'underscore'],
 			exports: 'Backbone'
