@@ -31,6 +31,10 @@
                         {
                             "xml": "<feature name=\"SocialSharing\"><param name=\"android-package\" value=\"nl.xservices.plugins.SocialSharing\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -79,6 +83,9 @@
             "PACKAGE_NAME": "com.pb.pastelbook"
         },
         "nl.x-services.plugins.socialsharing": {
+            "PACKAGE_NAME": "com.pb.pastelbook"
+        },
+        "org.apache.cordova.inappbrowser": {
             "PACKAGE_NAME": "com.pb.pastelbook"
         }
     },

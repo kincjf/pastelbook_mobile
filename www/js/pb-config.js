@@ -18,6 +18,7 @@ requirejs.config({
 		camera: 'lib/cameraTest',
 		fabric: 'lib/fabric.require',
 		event: 'lib/event',
+		filepicker: 'lib/filepicker-0.0.1',
 
 		tpl: 'lib/tpl',
 		// external library

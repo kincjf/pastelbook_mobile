@@ -5,8 +5,8 @@
  */
 define([
 	'marionette',
-	'pb_templates','camera'
-], function (Marionette, templates,camera) {
+	'pb_templates','camera','filepicker'
+], function (Marionette, templates,camera,filepick) {
 	'use strict';
 
 	var HeaderView = Marionette.ItemView.extend({
@@ -74,6 +74,20 @@ define([
 			
 			$('#local_album').click(this.onLocalAlbum);
 			$('#camera').click(this.onCamera);
+			$('#filepick').click(this.onFilepicker);
+		},
+		onFilepicker: function(){
+			filepicker.setKey("A9o1vYeamQTyUC8Eb1Z8pz");
+			filepicker.getFile("image/*", function(url, metadata){
+			    alert("You picked: "+url);
+			    console.log(url);
+			});
+			/*
+			var ref = window.open('http://apache.org', '_blank', 'location=yes');
+	         ref.addEventListener('loadstart', function(event) { alert('start: ' + event.url); });
+	         ref.addEventListener('loadstop', function(event) { alert('stop: ' + event.url); });
+	         ref.addEventListener('loaderror', function(event) { alert('error: ' + event.message); });
+	         ref.addEventListener('exit', function(event) { alert(event.type); });*/
 		},
 		openAddTextPopup: function() {
 			this.ui.addTextPopup.popup("open");
