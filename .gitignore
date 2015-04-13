@@ -1,5 +1,5 @@
 .idea
 etc
 target
-www
 ant-build
+/platforms/android/assets/www

@@ -4,11 +4,12 @@
  */
 'use strict';
 (function () {
-	var testPath = 'test/';
+	var testPath = 'test/unit/';
+	var testLibPath = 'test/';
 	var basePath = '../lib';
 
 	require.config({
-		baseUrl: '../',
+		baseUrl: '../../',
 		paths: {
 			backbone: 'lib/backbone',
 			jquery: 'lib/jquery-1.11.2.min',
@@ -23,7 +24,7 @@
 			pb_templates: 'js/templates',
 
 			//qunit: 'lib/qunit/qunit-1.15.0',
-			pubsub: testPath + 'lib/pubsub-1.5.0'
+			pubsub: testLibPath + 'lib/pubsub-1.5.0'
 			//
 			//sinon: 'lib/sinon/sinon-1.11.1',
 			//'sinon-qunit': 'lib/sinon/sinon-qunit-1.0.0',

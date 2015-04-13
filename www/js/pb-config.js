@@ -15,12 +15,13 @@ requirejs.config({
 		marionette: 'lib/backbone.marionette',
 		radio: 'lib/backbone.radio',
 
-		camera: 'lib/cameraTest',
+		tpl: 'lib/tpl',
+
 		fabric: 'lib/fabric.require',
 		event: 'lib/event',
 		filepicker: 'lib/filepicker-0.0.1',
-
-		tpl: 'lib/tpl',
+		hammer: 'lib/hammer',
+		animationFrame: 'lib/animation-frame/AnimationFrame',
 		// external library
 
 		pb_namespace: 'js/pb-namespace',
@@ -69,6 +70,10 @@ requirejs.config({
 
 		tpl: {
 			extension: '.tpl'	 // default = '.html'
+		},
+
+		"animation-frame" :{
+			exports: 'AnimationFrame'
 		},
 
 		pb_app_editor: {
