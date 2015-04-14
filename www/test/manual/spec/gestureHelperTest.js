@@ -3,57 +3,86 @@
  */
 
 
-require(["jquery", "js/common/GestureHelper", "hammer"], function($, GestureHelper, Hammer) {
+require(["marionette", "jquery", "js/common/GestureHelper", "hammer"], function (Marionette, $, GestureHelper, Hammer) {
     var el = $("#hitarea")[0];
     var START_X = 0;
     var START_Y = 0;
 
-    var gestureHelper = new GestureHelper({
+    var MyItemView = Marionette.ItemView.extend({
         el: el,
-        START_X : START_X,
-        START_Y : START_Y
+
+        events: {
+          //"panstart": "panItem"       // event hash는 작동하지 않는다.
+        },
+
+        initialize: function () {
+            var options = {
+                el: this.el
+            };
+
+            _.extend(this, GestureHelper);
+
+            this.setGesture(options);
+
+            this.mc = new Hammer.Manager(this.el);
+
+            this.mc.add(new Hammer.Pan({threshold: 0, pointers: 0}));
+
+            this.mc.add(new Hammer.Swipe()).recognizeWith(this.mc.get('pan'));
+            this.mc.add(new Hammer.Rotate({threshold: 0})).recognizeWith(this.mc.get('pan'));
+            this.mc.add(new Hammer.Pinch({threshold: 0})).recognizeWith([this.mc.get('pan'), this.mc.get('rotate')]);
+
+            this.mc.add(new Hammer.Tap({event: 'doubletap', taps: 2}));
+            this.mc.add(new Hammer.Tap());
+
+            this.mc.on("panstart panmove", _.bind(this.panItem, this));
+            this.mc.on("rotatestart rotatemove", _.bind(this.onRotate, this));
+            this.mc.on("pinchstart pinchmove", _.bind(this.onPinch, this));
+
+            //this.name = "aaa";
+            //MyItemView.getA();
+        },
+
+        panItem: function(ev) {
+            this.onPan(ev);
+            //logEvent(ev);
+            //requestElementUpdate();
+        },
+        pinchItem: function(ev) {
+            this.onPinch(ev);
+
+        },
+        rotateItem: function(ev) {
+            this.onRotate(ev);
+        },
+        swipeItem: function(ev) {
+            this.onSwipe(ev);
+        },
+        tapItem: function(ev) {
+            this.onTap(ev);
+        },
+        doubleTapItem: function(ev) {
+            this.onDoubleTap(ev);
+        }
+    }, {
+        getA: function () {
+            console.log(this.name);
+        }
     });
-    var mc = new Hammer.Manager(el);
 
-    mc.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
+    var itemView1 = new MyItemView();
 
-    mc.add(new Hammer.Swipe()).recognizeWith(mc.get('pan'));
-    mc.add(new Hammer.Rotate({ threshold: 0 })).recognizeWith(mc.get('pan'));
-    mc.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([mc.get('pan'), mc.get('rotate')]);
+    console.log(itemView1.reqAnimationFrame === GestureHelper.reqAnimationFrame);
+    console.log(itemView1.onPinch === GestureHelper.onPinch);
+    console.log(_.isEqual(itemView1.reqAnimationFrame,GestureHelper.reqAnimationFrame));
 
-    mc.add(new Hammer.Tap({ event: 'doubletap', taps: 2 }));
-    mc.add(new Hammer.Tap());
+    //var gestureHelper = new GestureHelper({
+    //    el: el,
+    //    START_X: START_X,
+    //    START_Y: START_Y
+    //});
 
-    mc.on("panstart panmove", onPan);
-    mc.on("rotatestart rotatemove", onRotate);
-    mc.on("pinchstart pinchmove", onPinch);
     //mc.on("swipe", onSwipe);
     //mc.on("tap", onTap);
     //mc.on("doubletap", onDoubleTap);
-
-    function onPan(ev) {
-        gestureHelper.onPan(ev);
-        //logEvent(ev);
-        //requestElementUpdate();
-    }
-
-    function onPinch(ev) {
-        gestureHelper.onPinch(ev);
-    }
-
-    function onRotate(ev) {
-        gestureHelper.onRotate(ev);
-    }
-
-    function onSwipe(ev) {
-        gestureHelper.onSwipe(ev);
-    }
-
-    function onTap(ev) {
-        gestureHelper.onTap(ev);
-    }
-
-    function onDoubleTap(ev) {
-        gestureHelper.onPinch(ev);
-    }
-});z
+});

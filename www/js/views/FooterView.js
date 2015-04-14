@@ -16,7 +16,7 @@ define(['marionette','pb_templates','lightSlider','fabric'], function (Marionett
 		'click #filter2' : 'imageFilterInvert',
 		'click #filter3' : 'imageFiltergraycasle',
 		'click #filter4' : 'imageFilterConvolute',
-		'click #filter5' : 'imageFilterNoise',
+		'click #filter5' : 'imageFilterNoise'
 	},
 	ui: {
 		slider: "#slider-ul"
@@ -99,7 +99,7 @@ define(['marionette','pb_templates','lightSlider','fabric'], function (Marionett
 		image.filters[0] = new fabric.Image.filters.Invert();
 		
 		image.applyFilters(canvas.renderAll.bind(canvas));
-	},
+	}
 	
 	
 	});

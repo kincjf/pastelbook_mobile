@@ -75,7 +75,6 @@ define([
 			});
 
 			this.comply(pb.event.change.currentScene.default, this.setCurrentScene);
-			this.comply(pb.event.change.currentScene.default, this.setCurrentScene);
 
 			/** 이미지, 텍스트박스 추가 */
 			this.comply(pb.event.add.object.image.default + " "
