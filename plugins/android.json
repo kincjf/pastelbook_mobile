@@ -25,10 +25,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"SocialSharing\"><param name=\"android-package\" value=\"nl.xservices.plugins.SocialSharing\" /></feature>",
                             "count": 1
                         },
@@ -38,6 +34,10 @@
                         },
                         {
                             "xml": "<feature name=\"MediaScannerPlugin\"><param name=\"android-package\" value=\"org.sfl.MediaScannerPlugin.MediaScannerPlugin\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -83,9 +83,6 @@
         "org.apache.cordova.device": {
             "PACKAGE_NAME": "com.pb.pastelbook"
         },
-        "org.apache.cordova.camera": {
-            "PACKAGE_NAME": "com.pb.pastelbook"
-        },
         "nl.x-services.plugins.socialsharing": {
             "PACKAGE_NAME": "com.pb.pastelbook"
         },
@@ -93,6 +90,9 @@
             "PACKAGE_NAME": "com.pb.pastelbook"
         },
         "org.sfl.MediaScannerPlugin": {
+            "PACKAGE_NAME": "com.pb.pastelbook"
+        },
+        "org.apache.cordova.camera": {
             "PACKAGE_NAME": "com.pb.pastelbook"
         }
     },

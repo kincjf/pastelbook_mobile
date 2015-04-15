@@ -29,7 +29,8 @@ requirejs.config({
 
 		pb_app_editor: 'js/app-editor',		//main start point
 			
-		lightSlider : 'lib/jquery.lightSlider'  //footer slider
+		lightSlider : 'lib/jquery.lightSlider',  //footer slider
+		camera : 'lib/cameraTest',
 	},
 
 	/** shim은 non-AMD에서는 종속성을 뜻하지만
