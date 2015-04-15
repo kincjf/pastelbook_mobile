@@ -11,5 +11,12 @@
             "type": "registry",
             "id": "org.apache.cordova.inappbrowser"
         }
+    },
+    "org.sfl.MediaScannerPlugin": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/peteygao/MediaScannerPlugin.git",
+            "subdir": "."
+        }
     }
 }

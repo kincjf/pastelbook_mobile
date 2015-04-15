@@ -23,6 +23,9 @@
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
     </feature>
+    <feature name="MediaScannerPlugin">
+        <param name="android-package" value="org.sfl.MediaScannerPlugin.MediaScannerPlugin" />
+    </feature>
     <name>PastelBook</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.

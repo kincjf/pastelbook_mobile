@@ -8,9 +8,11 @@ define([
 	'pb_templates','camera','filepicker'
 ], function (Marionette, templates,camera,filepick) {
 	'use strict';
-
+		
 	var HeaderView = Marionette.ItemView.extend({
 		tagName: "div",
+		test : '',
+		
 		ui: {
 			navbar: "[data-role='navbar']",
 			addImagePopupBtn: "[data-behavior='openAddImagePopup']",
@@ -23,6 +25,7 @@ define([
 			'tap @ui.addImagePopupBtn': 'openAddImagePopup',
 			'tap @ui.addTextPopupBtn': 'openAddTextPopup',
 			'click #tlqkf' : 'clickShareBtn',
+			'click #shareBtn' : 'clickStoreBtn',
 		},
 		onLocalAlbum:function(){
 			camera_album.getMultiPhoto();
@@ -98,7 +101,7 @@ define([
 			var canvas = pb.current.scene.canvas;
 		//	var image = pb.current.object.image;
 			
-			var test = canvas.toDataURL({
+			this.test = canvas.toDataURL({
 				format : 'png',
 				multiplier : 1,
 				quality : 1,
@@ -108,9 +111,57 @@ define([
 				height : canvas.item(0).height
 			});
 			
-		window.plugins.socialsharing.share(null, null, test ,null);	//사진 공유기능	
+		window.plugins.socialsharing.share(null, null, this.test ,null);	//사진 공유기능	
 		},
 		
+		clickStoreBtn : function(){
+			var fileTransfer = new FileTransfer();
+			
+
+			var canvas = pb.current.scene.canvas;
+			//	var image = pb.current.object.image;
+				
+				this.test = canvas.toDataURL({
+					format : 'png',
+					multiplier : 1,
+					quality : 1,
+					left : canvas.item(0).left,
+					top : canvas.item(0).top,
+					width : canvas.item(0).width,
+					height : canvas.item(0).height
+				});
+			var uri = encodeURI(this.test);
+			fileTransfer.download(
+			    uri,
+			    'file:///sdcard/DCIM/Camera/ㅋㅋ.png',
+			    function(entry) {
+			        console.log("download complete: " + entry.toURL());
+			       
+			        window.MediaScannerPlugin.scanFile(
+			                function(msg){
+			                    console.log(msg);
+			                },
+			                function(err){
+			                    console.log(err);
+			                },
+			                'file:///sdcard/DCIM/Camera/ㅋㅋ.png'
+			            );
+			    },
+			    function(error) {
+			        console.log("download error source " + error.source);
+			        console.log("download error target " + error.target);
+			        console.log("upload error code" + error.code);
+			    },
+			    false,
+			    {
+			        headers: {
+			            "Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
+			        }
+			    }
+			    
+			);
+			
+		},
 	});
 
 	return HeaderView

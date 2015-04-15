@@ -35,6 +35,10 @@
                         {
                             "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"MediaScannerPlugin\"><param name=\"android-package\" value=\"org.sfl.MediaScannerPlugin.MediaScannerPlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -86,6 +90,9 @@
             "PACKAGE_NAME": "com.pb.pastelbook"
         },
         "org.apache.cordova.inappbrowser": {
+            "PACKAGE_NAME": "com.pb.pastelbook"
+        },
+        "org.sfl.MediaScannerPlugin": {
             "PACKAGE_NAME": "com.pb.pastelbook"
         }
     },
