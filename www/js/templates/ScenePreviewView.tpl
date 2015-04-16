@@ -4,5 +4,5 @@
 <!-- 일단 예시로 만들어놓았음 -->
 <li class="ui-state-default">
     <%= sceneNumber %>
-    <img src="./img/dummy/dummy.png" width="100" height="100" />
+    <img src="./img/dummy.png" width="100" height="100" />
 </li>

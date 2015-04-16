@@ -1,9 +1,9 @@
 <div class="scene">
-    <!--¿©±â¿¡ sceneÀÌ µé¾î°¨-->
+    <!--ï¿½ï¿½ï¿½â¿¡ sceneï¿½ï¿½ ï¿½ï¿½î°¨-->
     <canvas class="picture-board" id="sceneCanvas" width="300" height="300">
         Browser is not supported html5 canvas.
     </canvas>
     
-    <button id = "img-filter">Button</button>
+   <!-- <button id = "img-filter">Button</button> -->
     
 </div>

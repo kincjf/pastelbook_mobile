@@ -22,13 +22,14 @@ define([
 	'js/views/FooterView',
 	'js/views/ImageListView',
 	'js/views/EditView',
+	'js/views/FirstPageView',
 	'js/routers/MobileRouter'
 ], function (Marionette,
              Project,
              SceneList, SceneViewSetList,
              SceneCompositeView, ScenePreviewCompositeView,
 				 HeaderView, FooterView, ImageListView, EditView,
-				 MobileRouter) {
+				 FirstPageView,MobileRouter) {
 	'use strict';
 
 	var app_editor = new Marionette.Application();
@@ -58,8 +59,8 @@ define([
 	var headerView = new HeaderView();    	// HeaderView
 	var footerview = new FooterView();		// FooterView
 	var editView = new EditView();			// EditView
-	// ImageListView
-	
+	var imagelistView =new ImageListView(); // ImageListView
+	var firstpageView =new FirstPageView();
 
 	/** event driven message passing을 위한 Backbone.Radio
 	 * 현재는 global로 관리를 하지만, app이 커질 경우 차후에는 event 종류별로
@@ -80,7 +81,8 @@ define([
 		headerView: '#editor_main_header',
 		footerView: '#editor_main_footer',
 		sceneCompositeView: '#editor_main_content',
-		editView: '#edit_detail'
+		editView: '#edit_detail',
+		FirstPageView:'#first_page'
 	});
 
 	app_editor.addInitializer(function (options) {
@@ -90,6 +92,8 @@ define([
 		app_editor.headerView.show(headerView);
 		app_editor.footerView.show(footerview);
 		app_editor.editView.show(editView);
+		app_editor.imageListView.show(imagelistView);
+		app_editor.FirstPageView.show(firstpageView);	
 		/** Scene이 처음에 하나는 있어야 되기 때문에 */
 		sceneList.push({
 			previewScene: true
@@ -149,6 +153,8 @@ define([
 	app_editor.addInitializer(function (options) {
 		this.router = new MobileRouter();
 		Backbone.history.start();
+		
+		
 	});
 
 	return app_editor;

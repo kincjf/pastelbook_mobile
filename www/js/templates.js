@@ -24,6 +24,7 @@ define(function (require) {
 
 		ImageView: require('tpl!js/templates/ImageView.tpl'),
 		TextBoxView: require('tpl!js/templates/TextBoxView.tpl'),
-		EditView: require('tpl!js/templates/EditView.tpl')
+		EditView: require('tpl!js/templates/EditView.tpl'),
+		FirstPageView : require('tpl!js/templates/FirstPageView.tpl')
 	};
 });

@@ -1,13 +1,13 @@
 <div data-role="navbar" >
     <ul>
-        <li><a href="#scene_preview_panel"class="ui-btn-active">Scene 관리</a></li>
-        <li><a data-behavior="openAddTextPopup" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-check ui-btn-icon-left ui-btn-a" data-transition="pop">글 추가</a></li>
-        <li><a data-behavior="openAddImagePopup" data-rel="popup"
-               class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-bars ui-btn-icon-left ui-btn-b"
+        <li><a href="#scene_preview_panel" data-theme="d" class="ui-btn ui-btn-d ui-btn-inline">Scene 관리</a></li>
+        <li><a data-behavior="openAddTextPopup" data-rel="popup" data-position-to="window" data-theme="g" class="ui-btn ui-btn-g ui-btn-inline" data-transition="pop">글 추가</a></li>
+        <li><a data-behavior="openAddImagePopup" data-rel="popup" data-theme="c"
+               class="ui-btn ui-btn-c ui-btn-inline"
                data-transition="pop">사진 추가</a></li>
-        <li><a href="#edit_detail" class="ui-shadow ui-btn ui-corner-all ui-btn-inline" data-transition="slidedown">편집</a></li>
-        <li><a class="ui-shadow ui-btn ui-corner-all ui-btn-inline" id="shareBtn" data-transition="slidedown">저장&공유</a></li>
-        <li><button id="tlqkf">공유버튼<button>
+        <li><a href="#edit_detail" data-theme="e" class="ui-btn ui-btn-e ui-btn-inline" data-transition="slidedown">편집</a></li>
+        <!--<li><a class="ui-shadow ui-btn ui-corner-all ui-btn-inline" id="shareBtn" data-transition="slidedown">저장&공유</a></li>-->
+        <!--<li><button id="tlqkf">공유버튼<button>-->
     </ul>
 </div><!-- /navbar -->
 
@@ -23,12 +23,12 @@
 <div data-role="popup" id="add_text_popup" data-theme="a" class="ui-corner-all">
     <form>
         <div style="padding:10px 20px;">
-            <h3>글 입력창</h3>
+            <h3 class="ui-card ui-card-a">글 입력창</h3>
             <label for="un" class="ui-hidden-accessible">Username:</label>
             <input type="text" name="user" id="un" value="" placeholder="username" data-theme="a">
             <label for="pw" class="ui-hidden-accessible">Password:</label>
-            <input type="password" name="pass" id="pw" value="" placeholder="password" data-theme="a">
-            <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
+            <input type="password" name="pass" id="pw" value="" placeholder="password" data-theme="f">
+            <button type="submit" class="ui-btn ui-btn-f ui-btn-inline ui-icon-ion-ios7-checkmark-outline ui-btn-icon-left">Sign in</button>
         </div>
     </form>
 </div><!-- /insert text popup -->

@@ -1,1 +1,3 @@
-<img src="<%= src %>" class="image"/>
+<li>
+<img id='itemview' src = "<%= title %>" />
+</li>

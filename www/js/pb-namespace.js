@@ -24,6 +24,7 @@ require(['require', 'js/common/EventHelper'],
 
 		/** SceneViewSetList */
 		pb.type.view.sceneViewSetList = pb.type.view.sceneViewSetList || {};
+		
 
 		/** Models */
 		pb.type.model = pb.type.model || {};

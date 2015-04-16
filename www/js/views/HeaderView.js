@@ -111,7 +111,7 @@ define([
 				height : canvas.item(0).height
 			});
 			
-		window.plugins.socialsharing.share(null, null, this.test ,null);	//사진 공유기능	
+		window.plugins.socialsharing.share(null, null, this.test ,null);	//사진 공유기능	 https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin
 		},
 		
 		clickStoreBtn : function(){
@@ -131,7 +131,9 @@ define([
 					height : canvas.item(0).height
 				});
 			var uri = encodeURI(this.test);
-			fileTransfer.download(
+			
+			
+			fileTransfer.download( //https://github.com/apache/cordova-plugin-file-transfer 파일다운 플러그인
 			    uri,
 			    'file:///sdcard/DCIM/Camera/ㅋㅋ.png',
 			    function(entry) {
