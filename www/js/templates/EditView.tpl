@@ -4,10 +4,10 @@
 			<a href='#' id='save' class='ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-action'>save</a>
 			<div data-role='navbar'>
 				<ul>
-					<li><a href='#edit_detail' id='image_select'>image_select</a></li>
-					<li><a href='#edit_detail' id='edge'>edge</a></li>
-					<li><a href='#edit_detail' id='flip'>flip</a></li>
-					<li><a href='#edit_detail' id='crop'>crop</a></li>
+					<li><a href='#edit_detail' id='image_select' class="ui-btn ui-btn-inline ui-btn-b ui-outline">image_select</a></li>
+					<li><a href='#edit_detail' id='edge' class="ui-btn ui-btn-inline ui-btn-b ui-outline">edge</a></li>
+					<li><a href='#edit_detail' id='flip' class="ui-btn ui-btn-inline ui-btn-b ui-outline">flip</a></li>
+					<li><a href='#edit_detail' id='crop' class="ui-btn ui-btn-inline ui-btn-b ui-outline">crop</a></li>
 				</ul>
 			</div>
 			<!-- HeaderView  -->
