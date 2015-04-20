@@ -30,7 +30,7 @@ requirejs.config({
 		pb_app_editor: 'js/app-editor',		//main start point
 			
 		lightSlider : 'lib/jquery.lightSlider',  //footer slider
-		camera : 'lib/cameraTest',
+		camera : 'lib/cameraTest'
 	},
 
 	/** shim은 non-AMD에서는 종속성을 뜻하지만
@@ -73,7 +73,10 @@ requirejs.config({
 			extension: '.tpl'	 // default = '.html'
 		},
 
-		"animation-frame" :{
+		filepicker: {
+			exports: 'filepicker'
+		},
+		"animation-frame" : {
 			exports: 'AnimationFrame'
 		},
 

@@ -38,14 +38,29 @@ var filepicker = (function(){
      * @Map{@String}: an enum of the services we support
      */
     var SERVICES = {
-        BOX: 0,
-        DROPBOX: 2,
-        FACEBOOK: 3,
-        GITHUB: 4,
-        GMAIL: 5,
-        IMAGE_SEARCH: 6,
-        GOOGLE_DRIVE: 9,
-        SEND_EMAIL: 10
+        COMPUTER:1,
+        DROPBOX:2,
+        FACEBOOK:3,
+        GITHUB:4,
+        GMAIL:5,
+        IMAGE_SEARCH:6,
+        URL:7,
+        WEBCAM:8,
+        GOOGLE_DRIVE:9,
+        SEND_EMAIL:10,
+        INSTAGRAM:11,
+        FLICKR:12,
+        VIDEO:13,
+        EVERNOTE:14,
+        PICASA:15,
+        WEBDAV:16,
+        FTP:17,
+        ALFRESCO:18,
+        BOX:19,
+        SKYDRIVE:20,
+        GDRIVE:21,
+        CUSTOMSOURCE:22,
+        CLOUDDRIVE:23
     };
         
     var FilepickerException = function(text){
@@ -88,6 +103,8 @@ var filepicker = (function(){
             "&referrer="+window.location.hostname+
             "&modal=false"+
             "&redirect_url="+BASE_URL+FINISHED_PATH+
+            "&version=v1"+
+            (options['multi'] ? "&multi="+options['multi'] : "")+
             (options['services'] ? "&s="+options['services'].join(",") : "")+
             (options['location'] !== undefined ? "&loc="+options['location'] : "")+
             (options['metadata'] ? "&meta="+options['metadata']: "")+
@@ -104,6 +121,7 @@ var filepicker = (function(){
             "&referrer="+window.location.hostname+
             "&modal=false"+
             "&redirect_url="+BASE_URL+FINISHED_PATH+
+            "&version=v1"+
             (options['services'] ? "&s="+options['services'] : "")+
             (options['location'] !== undefined ? "&loc="+options['location'] : "");
     };
@@ -226,7 +244,8 @@ var filepicker = (function(){
         }*/
 
         //window.plugins.childBrowser.showWebPage(url);
-    	var ref = window.open(url,'_blank', 'location=no,enableViewportScale=yes');
+    	var ref = window.open(url,'_self', 'location=no,enableViewportScale=yes');
+
     	var listener = function(event){
     		var loc = event.url;
 			var parser = document.createElement('a');
@@ -258,7 +277,7 @@ var filepicker = (function(){
             //Really cool hack
             var parser = document.createElement('a');
             parser.href = loc;
-            
+
             console.log(loc);
             //DOM auto-parses
             if (parser.hostname == "www.filepicker.io" && parser.pathname == FINISHED_PATH) {
