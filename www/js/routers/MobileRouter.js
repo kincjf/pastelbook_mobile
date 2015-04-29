@@ -31,7 +31,9 @@ define([
 		home: function () {
 			myLogger.trace("MobileRouter - home");
 			// Programatically changes to the categories page
-			$.mobile.changePage("#editor_main", {reverse: false, changeHash: false});
+			
+			// 페이지 로딩시 라우터를 써서 더 복잡하기 때문에 페이지 전환은 무조건 수동으로 전환하는 것으로 함.
+			// $.mobile.changePage("#editor_main", {reverse: false, changeHash: false});
 		},
 
 		// Category method that passes in the type that is appended to the url hash
