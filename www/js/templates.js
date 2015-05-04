@@ -25,6 +25,10 @@ define(function (require) {
 		ImageView: require('tpl!js/templates/ImageView.tpl'),
 		TextBoxView: require('tpl!js/templates/TextBoxView.tpl'),
 		EditView: require('tpl!js/templates/EditView.tpl'),
-		FirstPageView : require('tpl!js/templates/FirstPageView.tpl')
+		FirstPageView : require('tpl!js/templates/FirstPageView.tpl'),
+		LoginPageView : require('tpl!js/templates/LoginPageView.tpl'),
+		JoinPageView : require('tpl!js/templates/JoinPageView.tpl'),
+		LoadPageCompositeView : require('tpl!js/templates/LoadPageCompositeView.tpl'),
+		LoadPageItemView : require('tpl!js/templates/LoadPageItemView.tpl')
 	};
 });

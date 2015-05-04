@@ -23,13 +23,17 @@ define([
 	'js/views/ImageListView',
 	'js/views/EditView',
 	'js/views/FirstPageView',
+	'js/views/LoginPageView',
+	'js/views/JoinPageView',
+	'js/views/LoadPageCompositeView',
 	'js/routers/MobileRouter'
 ], function (Marionette,
              Project,
              SceneList, SceneViewSetList,
              SceneCompositeView, ScenePreviewCompositeView,
 				 HeaderView, FooterView, ImageListView, EditView,
-				 FirstPageView,MobileRouter) {
+				 FirstPageView,LoginPageView,JoinPageView,LoadPageCompositeView,
+				 MobileRouter) {
 	'use strict';
 
 	var app_editor = new Marionette.Application();
@@ -61,7 +65,10 @@ define([
 	var editView = new EditView();			// EditView
 	var imagelistView =new ImageListView(); // ImageListView
 	var firstpageView =new FirstPageView();
-
+	var loginpageView = new LoginPageView();
+	var joinpageView = new JoinPageView();
+	var loadpagecompositeView = new LoadPageCompositeView();
+	
 	/** event driven message passing을 위한 Backbone.Radio
 	 * 현재는 global로 관리를 하지만, app이 커질 경우 차후에는 event 종류별로
 	 * 분류할 예정임. Backbone.wreqr의 업그레이드 버전이라함.
@@ -77,6 +84,9 @@ define([
 	 */
 	app_editor.addRegions({
 		FirstPageView:'#first_page',
+		LoginPageView:'#login-_page',
+		JoinPageView:'#Join_page',
+		LoadPageCompositeView:'#load_page',
 		
 		scenePreviewCompositeView: '#scene_preview_panel',
 		imageListView: '#image_list_panel',
@@ -84,11 +94,14 @@ define([
 		footerView: '#editor_main_footer',
 		sceneCompositeView: '#editor_main_content',
 		editView: '#edit_detail'
+		
 	});
 
 	app_editor.addInitializer(function (options) {
 		app_editor.FirstPageView.show(firstpageView);	
-
+		app_editor.LoginPageView.show(loginpageView);
+		app_editor.JoinPageView.show(joinpageView);
+		app_editor.LoadPageCompositeView.show(loadpagecompositeView);
 		
 		app_editor.sceneCompositeView.show(sceneCompositeView);
 		//app_editor.currentScenePreview.show(scenePreviewCompositeView);
@@ -97,6 +110,7 @@ define([
 		app_editor.footerView.show(footerview);
 		app_editor.editView.show(editView);
 		app_editor.imageListView.show(imagelistView);
+		
 		/** Scene이 처음에 하나는 있어야 되기 때문에 */
 		sceneList.push({
 			previewScene: true
