@@ -6,7 +6,7 @@
 				<div class="btn-line1" >
    					<fieldset class="ui-grid-a">
 						<div class="ui-block-a" align="center"><button class="ui-btn ui-btn-inline ui-btn-d ui-clear">만들기</button></div>
-                    	<div class="ui-block-b" align="center"><button class="ui-btn ui-btn-inline ui-btn-d ui-clear">불러오기</button></div>
+                    	<div class="ui-block-b" align="center"><button id="load_page_btn" class="ui-btn ui-btn-inline ui-btn-d ui-clear">불러오기</button></div>
 					</fieldset>
 				</div>
 				

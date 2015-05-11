@@ -1,2 +1,2 @@
-E:\eclipse-android\workspace\pastelbook\platforms\android\CordovaLib\ant-build\AndroidManifest.xml : \
-E:\eclipse-android\workspace\pastelbook\platforms\android\CordovaLib\AndroidManifest.xml \
+C:\Users\Elsa\phonegap\pastelbook_mobile\platforms\android\CordovaLib\ant-build\AndroidManifest.xml : \
+C:\Users\Elsa\phonegap\pastelbook_mobile\platforms\android\CordovaLib\AndroidManifest.xml \

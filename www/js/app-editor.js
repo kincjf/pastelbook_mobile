@@ -84,7 +84,7 @@ define([
 	 */
 	app_editor.addRegions({
 		FirstPageView:'#first_page',
-		LoginPageView:'#login-_page',
+		LoginPageView:'#login_page',
 		JoinPageView:'#Join_page',
 		LoadPageCompositeView:'#load_page',
 		
@@ -111,7 +111,7 @@ define([
 		app_editor.editView.show(editView);
 		app_editor.imageListView.show(imagelistView);
 		
-		/** Scene이 처음에 하나는 있어야 되기 때문에 */
+		/** Scene이 처음에 하나는 있어야 되기 때문에 */0
 		sceneList.push({
 			previewScene: true
 		});
@@ -171,7 +171,7 @@ define([
 		this.router = new MobileRouter();
 		Backbone.history.start();
 		
-//		$( ":mobile-pagecontainer" ).pagecontainer( "change", "#first_page", { role: "page" } );
+//		$( ":mobile-pagecontainer" ).pagecontainer( "change", "#load_page", { role: "page" } );
 
 	});
 
