@@ -150,7 +150,7 @@ define([
 			pb.current.scene = this;		//필터적용을 위해서 캔버스를 가져오기 위해서
 			this.setupForInsertObject({
 				type: 'image',
-				imgSrc: './tests/image/my-image.jpg'
+				imgSrc: './test/image/my-image.jpg'
 			});      // for test
 		},
 

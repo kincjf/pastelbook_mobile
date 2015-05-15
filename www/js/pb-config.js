@@ -73,7 +73,10 @@ requirejs.config({
 			extension: '.tpl'	 // default = '.html'
 		},
 
-		"animation-frame" :{
+		filepicker: {
+			exports: 'filepicker'
+		},
+		"animation-frame" : {
 			exports: 'AnimationFrame'
 		},
 
