@@ -9,13 +9,18 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 		
 		events :{
 			'click #load_page_btn': 'LoadPageBtn',
+			'click #join_page_btn': 'JoinPageBtn',
 		},
 		
 		initialize:function(){
 		},
-		LoadPageBtn : function(){
+		
+		LoadPageBtn : function(){ //로드페이지 이동
 			$(":mobile-pagecontainer").pagecontainer( "change", "#load_page", { role: "page" });
-			
+		},
+		
+		JoinPageBtn : function(){ //회원가입 페이지 이동
+			$(":mobile-pagecontainer").pagecontainer( "change", "#Join_page", { role: "page" });
 		}
 
 	});
