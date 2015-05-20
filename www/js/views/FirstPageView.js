@@ -10,6 +10,7 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 		events :{
 			'click #load_page_btn': 'LoadPageBtn',
 			'click #join_page_btn': 'JoinPageBtn',
+			'click .logo-image' : 'testEditView'
 		},
 		
 		initialize:function(){
@@ -21,7 +22,13 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 		
 		JoinPageBtn : function(){ //회원가입 페이지 이동
 			$(":mobile-pagecontainer").pagecontainer( "change", "#Join_page", { role: "page" });
-		}
+		},
+		
+		testEditView : function(){
+			$(":mobile-pagecontainer").pagecontainer( "change", "#edit_detail", { role: "page" });
+		},
+		
+
 
 	});
 });
