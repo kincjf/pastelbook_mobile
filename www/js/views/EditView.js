@@ -16,7 +16,8 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 			'click #flip': 'flip',
 			'click #crop_save': 'crop_save',
 			'click #save' : 'save',
-			'click #close': 'close'
+			'click #close': 'close',
+			'click #edge_save': 'edge_confirm'
 		},
 		initialize:function(){
 		},
@@ -32,20 +33,25 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 		
 		onRender:function(){
 			var that = this;
-			$('#edit_detail').on("pagecreate",function(){
+			$('#edit_detail').on("pageshow",function(){
 				
 				var screen = $.mobile.getScreenHeight(),
-			    header = $(".ui-header").hasClass("ui-header-fixed") ? $(".ui-header").outerHeight() - 1 : $(".ui-header").outerHeight(),
-			    footer = $(".ui-footer").hasClass("ui-footer-fixed") ? $(".ui-footer").outerHeight() - 1 : $(".ui-footer").outerHeight(),
+			    header = $(".ui-header").hasClass("ui-header-fixed") ? $(".ui-header").outerHeight() - 1 : $(".ui-header:eq(1)").outerHeight(),
+			    footer = $(".ui-footer").hasClass("ui-footer-fixed") ? $(".ui-footer").outerHeight() - 1 : $(".ui-footer:eq(1)").outerHeight(),
 			    contentCurrent = $(".ui-content").outerHeight() - $(".ui-content").height(),
 			    content = screen - header - footer - contentCurrent;
-			    $(".ui-content").height(content);
-			    $('#canvas1').attr('width',$(".ui-content").width());
-			    $('#canvas1').attr('height',content-10);
-			    $('#canvas2').attr('width',$(".ui-content").width());
-			    $('#canvas2').attr('height',content-10);
-			    $('#canvas3').attr('width',$(".ui-content").width());
-			    $('#canvas3').attr('height',content-10);
+			    console.log(screen);//615
+			    console.log(header);//76
+			    console.log(footer);//41
+			    console.log(contentCurrent);//2
+			    console.log(content);//492
+			    $(".ui-content").css('height',content);
+			    $('#canvas1').attr('width',$( window ).width());
+			    $('#canvas1').attr('height',content);
+			    $('#canvas2').attr('width',$( window ).width());
+			    $('#canvas2').attr('height',content);
+			    $('#canvas3').attr('width',$( window ).width());
+			    $('#canvas3').attr('height',content);
 			    
 			    that.canvas1 = new fabric.Canvas('canvas1');//이미지
 			    that.canvas2 = new fabric.Canvas('canvas2',{ isDrawingMode: true});//edge
@@ -65,19 +71,30 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 				that.canvas3.on('mouse:up',function(options){
 					started=false;
 				});
-				$('#edit_detail').on("pageshow",function(){
-					console.log('test');
-						that.init();
-				});
+				
+				that.init();
 			});
 			
 		},
+		save:function(){
+			
+		},
 		close:function(){
+			$(":mobile-pagecontainer").pagecontainer( "change", "#first_page", { role: "page" });
 		},
 		init:function(){
 			this.canvas1.clear();
 			this.canvas2.clear();
 			this.canvas3.clear();
+			var that = this;
+			//--------------------------------------------------
+			fabric.Image.fromURL('./test/image/my-image.jpg', function(imgInstance) {
+				that.img = imgInstance;
+				that.img.set('transformMatrix',[1,0,0,1,0,0]);
+				that.canvas1.add(that.img);
+			});
+			//--------------------------------------------------
+			/*
 			if(pb.current.object != null){
 				this.img = fabric.util.object.clone(pb.current.object.image);
 				this.img.left=0;
@@ -87,6 +104,7 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 				}
 				this.canvas1.add(this.img);
 			}
+			*/
 			$('#canvas1').parent().css('z-index',9999);
 			$('#canvas2').parent().css('z-index',9997);
 			$('#canvas3').parent().css('z-index',9996);
@@ -99,6 +117,9 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 			this.canvas3.clear();
 		},
 		edge:function(e){
+			$('#edge_save').remove();
+			this.canvas2.clear();
+			$('#edge').parent().append($('<a href="javascript:void(0)" id="edge_save">confirm</a>'));
 			$('#canvas1').parent().css('z-index',500);
 			$('#canvas3').parent().css('z-index',400);
 			$('#canvas2').parent().css('z-index',9999);
@@ -109,10 +130,53 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 		    
 		    this.observeBoolean(false,true);
 		},
+		edge_confirm : function(){
+		    console.log(this.canvas2.freeDrawingBrush._points);
+			var item_left = this.canvas1.item(0).left;
+			var item_top = this.canvas1.item(0).top;
+			var item_width = this.canvas1.item(0).width;
+			var item_height = this.canvas1.item(0).height;
+			console.log(this.canvas2.width);
+			var dataURL = this.canvas1.toDataURL({
+				format: 'jpg',
+				multiplier: 1,
+				quality: 1,
+				left: item_left,
+				top: item_top,
+				width: item_width,
+				height: item_height
+			});
+			var that = this;
+			$.ajax({
+				url: 'http://192.168.2.8:8084/hello',
+				type: 'POST',
+				data: {
+					url: dataURL
+					//rect: {x:item_left,y:item_top,width:item_width,height:item_height}
+				},
+				success: function(data){
+					var a = $.parseJSON(data);
+					//alert(a.url);
+					//$('#edit_img').attr('src',"data:image/png;base64,"+a.url);
+					var url = "data:image/png;base64,"+a.url;
+					//--------------------------------------------------
+					that.canvas1.clear();
+					fabric.Image.fromURL(url, function(imgInstance) {
+						that.img = imgInstance;
+						that.img.set('transformMatrix',[1,0,0,1,0,0]);
+						that.canvas1.add(that.img);
+						$('#image_select').click();
+						$('#edge_save').remove();
+					});
+				}
+				
+			});
+		},
 		image_select:function(){
 			$('#canvas1').parent().css('z-index',9999);
 			$('#canvas2').parent().css('z-index',9997);
 			$('#canvas3').parent().css('z-index',9998);
+			$('#edge_save').remove();
 			this.observeBoolean(true,true);
 		},
 		crop_save:function(e){
@@ -125,7 +189,7 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 				width: this.rect_crop.getWidth(),
 				height: this.rect_crop.getHeight()
 			});
-			console.log(dataURL);
+
 			var that = this;
 			fabric.Image.fromURL(dataURL, function(imgInstance) {
 				that.canvas1.clear();
@@ -138,8 +202,11 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 		},
 		
 		crop:function(e){
-			console.log($('#crop_save'));
-			$('#crop').parent().append($('<a href="#edit_detail" id="crop_save">crop_save</a>'));
+			$('#edge_save').remove();
+			$('#crop_save').remove();
+			this.removeRect();
+			
+			$('#crop').parent().append($('<a href="javascript:void(0)" id="crop_save">crop_save</a>'));
 			$('#canvas1').parent().css('z-index',9998);
 			$('#canvas2').parent().css('z-index',9997);
 			$('#canvas3').parent().css('z-index',9999);
@@ -149,6 +216,7 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 		},
 		
 		flip:function(e){
+			$('#edge_save').remove();
 			if(this.img.transformMatrix[0]==1){
 				this.img.set('transformMatrix',[-1,0,0,1,0,0]);
 			}else{
