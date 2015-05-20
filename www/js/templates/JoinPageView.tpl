@@ -10,9 +10,9 @@
 		</form>
 		<label><h3>성별</h3></label>
 		<fieldset data-role="controlgroup" data-type="horizontal">
-			<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="on" checked="checked">
+			<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="남자" checked="checked">
       		<label for="radio-choice-h-2a">남자</label>
-			<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="off">
+			<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="여자">
 			<label for="radio-choice-h-2b">여자</label>
 		</fieldset>
 	</div>
