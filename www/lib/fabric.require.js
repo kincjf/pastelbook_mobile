@@ -9702,6 +9702,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
       }
       this.setCursor(this.freeDrawingCursor);
       this.fire('mouse:move', { e: e });
+      
 
       var target = this.findTarget(e);
       if (typeof target !== 'undefined') {
