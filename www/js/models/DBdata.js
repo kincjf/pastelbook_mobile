@@ -1,6 +1,7 @@
 /*
- loadpageview의 모델
- 
+ *loadpageview의 모델
+ *웹DB에서 불러온 데이터 저장
+ *Create by Sumin on 5월 중 
  */
 define(['backbone'],function(Backbone){
   'use strict';

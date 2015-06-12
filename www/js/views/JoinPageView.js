@@ -1,5 +1,7 @@
 /**
-	회원가입 뷰 
+ *회원가입 페이지 뷰
+ *회원가입을 하고 개인정보를 서버에 전송 및 로컬스토리지에 저장
+ *Created by Sumin on 4월 중
  */
 define(['marionette','pb_templates'],function (Marionette,templates) {
 	"use strict";
@@ -24,8 +26,7 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 		JoinButton : function(){
 			var emailVal = $('#text_email').val();
 			var pwdVal = $('#text_pwd').val();
-			var sexVal =0 ;
-			
+			var sexVal =0;
 			if($(':input[name=radio-choice-h-2]:radio:checked').val() == "남자" )
 				sexVal = 1;
 			else
@@ -55,8 +56,7 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 					that.localSave("pwd",response.password);
 					console.log(response);
 					console.log(sexVal);
-					$(":mobile-pagecontainer").pagecontainer( "change", "#first_page", { role: "page" });
-					$('#login-hide').hide();
+					
 					//console.log("create account - rest/account SUCCESS:", response);
 					//console.log("COOKIES:", jqXHR.getAllResponseHeaders());
 					
@@ -69,27 +69,25 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 					// 새로운 jQuery ajax instance를 가지고 이용해야함
 				},
 				error: function (error) {
-					
 					// Log any error.
 					console.log("ERROR:", error);
 					return defer.fail();
 				}
-			});
-
+			})
+			.done(function (response){
+				
 			  $.ajax({
 		    	 type: "POST",
 		         url: "http://pastelbook.com/rest/account/login",
 		         dataType: "json",
 		            data: {
-		                account: window.localStorage.getItem("email"),
-		                password: window.localStorage.getItem("pwd")
+		                email: response.email,
+		                password: response.password
 		            },
 		            success: function (response, status, jqXHR) {
-		                // Put the plain text in the PRE tag.
-		                              
+		                // Put the plain text in the PRE tag.           
 		            	console.log(response);
-		            	
-		            	
+		            	console.log(response.status);
 //		            	console.log("login - rest/account/login SUCCESS:", response);
 //		                console.log("COOKIES:", jqXHR.getAllResponseHeaders());
 //		                $("body").append("success");
@@ -98,20 +96,22 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 		                // 이전 request값을 가지고 있기 때문에, response가 종료된 이후에
 		                // jQuery ajax를 다시 호출해주거나
 		                // 새로운 jQuery ajax instance를 가지고 이용해야함
-		                if (response.status == 1) {
+		                if(response.status == 1){
 		                   that.localSave("SessionId",response.sessionId);
-		                    //return defer.resolve(response);
+		                  
+		                   $(":mobile-pagecontainer").pagecontainer( "change", "#first_page", { role: "page" });
+		                   $('#login-hide').hide();
 		                } else {
-		                    return defer.fail();
+		                    alert("로그인을 실패 하였습니다.");
 		                }
 		            },
 		            error: function (error) {
-
 		                // Log any error.
 		                console.log("ERROR:", error);
 		                return defer.fail();
 		            }
 		     });
+			})  
 		},
 	});
 });

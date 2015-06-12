@@ -1,5 +1,8 @@
 /**
- 불러오기 뷰
+ *불러오기 페이지 뷰
+ *웹DB에 사진을 저장후 리스트 형식으로 보여줌
+ *웹DB에 저장된 사진과 날짜등을 긁어옴
+ *Created by Sumin on 5월 중
  */
 
 define(['marionette',

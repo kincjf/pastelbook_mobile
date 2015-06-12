@@ -1,6 +1,7 @@
 /**
- loadpageview에 들어가는 사진 콜렉션
- db에서 가저온 데이터들
+ *loadpageview에 들어가는 사진 콜렉션
+ *db에서 가저온 데이터들
+ *Create by Sumin on 5월 중
  */
 
 define(["backbone", "js/models/DBdata.js"],
