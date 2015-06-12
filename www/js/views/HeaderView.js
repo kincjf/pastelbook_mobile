@@ -25,7 +25,7 @@ define([
 			'tap @ui.addImagePopupBtn': 'openAddImagePopup',
 			'tap @ui.addTextPopupBtn': 'openAddTextPopup',
 			'click #tlqkf' : 'clickShareBtn',
-			'click #shareBtn' : 'clickStoreBtn',
+			'click #shareBtn' : 'clickStoreBtn'
 		},
 		onLocalAlbum:function(){
 			camera_album.getMultiPhoto();
