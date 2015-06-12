@@ -27,12 +27,8 @@ require(["marionette", "jquery", "js/common/GestureHelper", "hammer"], function 
             this.mc = new Hammer.Manager(this.el);
 
             this.mc.add(new Hammer.Pan({threshold: 0, pointers: 0}));
-
-            this.mc.add(new Hammer.Swipe()).recognizeWith(this.mc.get('pan'));
             this.mc.add(new Hammer.Rotate({threshold: 0})).recognizeWith(this.mc.get('pan'));
             this.mc.add(new Hammer.Pinch({threshold: 0})).recognizeWith([this.mc.get('pan'), this.mc.get('rotate')]);
-
-            this.mc.add(new Hammer.Tap({event: 'doubletap', taps: 2}));
             this.mc.add(new Hammer.Tap());
 
             this.mc.on("panstart panmove", _.bind(this.panItem, this));

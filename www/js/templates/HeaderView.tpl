@@ -11,6 +11,8 @@
     </ul>
 </div><!-- /navbar -->
 
+
+<!-- 차후에 Popup은 바깥쪽으로 뺴야될 것 같다. -->
 <div data-role="popup" id="add_image_popup" data-theme="b">
     <ul data-role="listview">
         <li><a data-rel="dialog" id="local_album">local storage</a></li>

@@ -1,4 +1,4 @@
-/*global define */
+/* global define */
 /**
  * Scene을 구성하는 개별화면
  *
@@ -6,12 +6,19 @@
  * 1. 추가요소(BaseObject) 삽입 => (구현중)
  */
 define([
-	'marionette'
-], function (Marionette) {
+	'marionette',
+	"js/common/GestureHelper",
+	"hammer"
+], function (Marionette, GestureHelper, Hammer) {
 	'use strict';
 
 	var BaseObjectView = Marionette.ItemView.extend({
-		ui: {},     // 다른 Object들과 extend됨.
+		tagName: "div",
+
+		ui: {
+			removeButton: "button[data-behavior='remove']"
+			// object 삭제
+		},     // 다른 Object들과 extend됨.
 
 		/**
 		 * - 어미에 Data가 붙은 것은 model Data를 직접 변경하는 것이고,
@@ -26,14 +33,7 @@ define([
 		 * - [un]selected:baseobject : 선택된 View의 instance를 pb.current.selectedBaseObject에 삽입/삭제한다.
 		 */
 		events: {
-			'selected:baseobject': 'selectView',
-			'unselected:baseobject': 'unselectView',
-			'mousedown': 'setupForDrag',
-			'drag': 'changeDirection',
-			'dragstop': 'changeDirectionData',
-			'resize': 'changeSize',
-			'resizestop': 'changeSizeData',
-			'click .rotateBtn': 'rotateObject'
+			'tap @ui.removeButton': 'removeObject'
 		},
 
 		className: "object",
@@ -43,9 +43,43 @@ define([
 		},
 
 		// "render" / onRender - after everything has been rendered
-		onRender: function (v) {
+		onRender: function () {
 			// 좀비뷰가 되지 않기 위해서는 custom event를 삭제해야함.
 			myLogger.trace("BaseObjectView - onRender");
+
+			var gestureOptions = {
+				el: this.el
+			};
+
+			_.extend(this, GestureHelper);
+
+			this.setGesture(gestureOptions);
+
+			this.gestureManager = new Hammer.Manager(gestureOptions.el);
+
+			this.gestureManager.add(new Hammer.Pan({
+				threshold: 0,
+				pointers: 0
+			}));
+			this.gestureManager.add(new Hammer.Rotate({
+				threshold: 0
+			})).recognizeWith(this.gestureManager.get('pan'));
+			this.gestureManager.add(new Hammer.Pinch({
+				threshold: 0
+			})).recognizeWith([this.gestureManager.get('pan'), this.gestureManager.get('rotate')]);
+			this.gestureManager.add(new Hammer.Tap());
+
+			// hammer event는 기본 event가 아니기 때문에 event hash가 적용되지 않음
+			this.gestureManager.on("panstart panmove", this.moveObject);
+			this.gestureManager.on("rotatestart rotatemove", this.rotateObject);
+			this.gestureManager.on("pinchstart pinchmove", this.pinchObject);
+			this.gestureManager.on("tap", this.tapObject);
+
+			this.gestureManager.on("hammer.input", function(event) {
+				if(event.isFinal) {
+					//	canvas 변경, 미리보기 변경
+				}
+			});
 		},
 
 		// Marionette Override Methods
@@ -67,118 +101,9 @@ define([
 			myLogger.trace("BaseObjectView - onDestroy");
 		},
 
-
 		// Custom Methods - Event Callback
-		/** selected:baseobject */
-		selectView: function () {
-			pb.current.selectedBaseObjectView.push(this);
-		},
-
-		/** unselected:baseobject */
-		unselectView: function () {
-			pb.current.selectedBaseObjectView.remove(this);
-		},
-
-		setupForDrag: function (event, ui) {
-			var widgetInstance = pb.current.scene.ui.scene.data("ui-selectable");
-			widgetInstance.selectees = pb.current.scene.ui.scene.find(widgetInstance.options.filter);
-
-			// 선택이 안되어 있을경우
-			if (!this.$el.hasClass("ui-selected")) {
-				// - ctrlKey가 안 눌린 경우
-				if (!event.metaKey && !event.ctrlKey) {
-
-					// 선택된 object만 selectable되고 나머지는 unselectable
-					widgetInstance.selectees.filter(".ui-selected").each(function() {
-						var selectee = $.data(this, "selectable-item");
-						selectee.$element.removeClass("ui-selected");
-						selectee.selected = false;
-						selectee.unselecting = false;
-
-						widgetInstance._trigger("unselected", event, {
-							unselected: this
-						});
-					});
-				}
-
-				// selectable object로 추가
-				this.$el.addClass("ui-selected");
-				widgetInstance._trigger("selected", event, {
-					selected: this.el
-				});
-			}
-		},
-
-		/** 'drag' */
-		changeDirection: function (event, ui) {
-			var dx = ui.position.left - this.el.getAttribute('data-x'),
-				dy = ui.position.top - this.el.getAttribute('data-y');
-
-			_.each(pb.current.selectedBaseObjectView.container, function (element, index, list) {
-				var x = (parseFloat(element.el.getAttribute('data-x')) || 0) + dx,
-					y = (parseFloat(element.el.getAttribute('data-y')) || 0) + dy;
-
-				element.$el.css({
-					left: x,
-					top: y
-				});
-
-				element.el.setAttribute('data-x', x);
-				element.el.setAttribute('data-y', y);
-			});
-
-			myLogger.trace("BaseObjectView - changeDirection");
-		},
-
-		/** 'dragstop' */
-		changeDirectionData: function (event, ui) {
-			// 차후에 translate에 맞게 x, y로 바꿔야될 것 같음
-			_.each(pb.current.selectedBaseObjectView.container, function (element, index, list) {
-				element.model.setTopLeft(
-					parseFloat(element.el.getAttribute('data-y')), parseFloat(element.el.getAttribute('data-x'))
-				);
-			}, this);
-
-			// selectable을 위한 refresh 수행
-			this.triggerMethod("DomRefresh");
-			this.changePreview();
-
-			myLogger.trace("BaseObjectView - changeDirectionData");
-		},
-
-		/** 'resize' */
-		changeSize: function (event, ui) {
-			var dwidth = ui.size.width - this.el.getAttribute('data-width'),
-				dheight = ui.size.height - this.el.getAttribute('data-height');
-
-			_.each(pb.current.selectedBaseObjectView.container, function (element, index, list) {
-				var width = (parseFloat(element.el.getAttribute('data-width')) || 0) + dwidth,
-					height = (parseFloat(element.el.getAttribute('data-height')) || 0) + dheight;
-
-				element.$el.css({
-					width: width,
-					height: height
-				});
-
-				element.el.setAttribute('data-width', width);
-				element.el.setAttribute('data-height', height);
-			});
-			myLogger.trace("BaseObjectView - changeDirection");
-		},
-
-		/** 'resizestop' */
-		changeSizeData: function (event, ui) {
-			_.each(pb.current.selectedBaseObjectView.container, function (element, index, list) {
-				element.model.setSize(
-					parseFloat(element.el.getAttribute('data-width')), parseFloat(element.el.getAttribute('data-height'))
-				);
-			}, this);
-
-			// selectable을 위한 refresh 수행
-			this.triggerMethod("DomRefresh");
-			this.changePreview();
-
-			myLogger.trace("BaseObjectView - changeSize");
+		moveObject: function(event) {
+			this.onPan(event);
 		},
 
 		/** 썸네일 구동 시기

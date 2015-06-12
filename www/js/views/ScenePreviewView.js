@@ -116,7 +116,7 @@ define([
 
 		onRender: function () {
 			this.renderCurrentScenePreview();
-			this.$el.contextMenu(this.scenePreviewContextMenu, this.contextMenuOptions);
+			//this.$el.contextMenu(this.scenePreviewContextMenu, this.contextMenuOptions);		// errorCode
 			myLogger.trace("ScenePreviewView - onRender");
 		},
 
@@ -127,7 +127,7 @@ define([
 		 */
 		onShow: function(v, c) {
 			myLogger.trace("ScenePreviewView - onShow");
-			pb.app_tool.vent.trigger("save:thumbnail", this.sceneViewSet, this.options.isReset);
+			pb.app_editor.vent.trigger("save:thumbnail", this.sceneViewSet, this.options.isReset);
 		},
 
 		/** This event / callback is useful for DOM-dependent UI plugins such as jQueryUI or KendoUI.
@@ -137,7 +137,7 @@ define([
 		},
 
 		onDestroy: function() {
-			this.$el.contextMenu("destroy");
+			//this.$el.contextMenu("destroy");		// error code
 			this.sceneViewSet.set("scenePreviewView", null, {
 				action: pb.value.FLAG.REMOVE
 			});

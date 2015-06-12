@@ -1,4 +1,4 @@
-/*global define */
+/* global define */
 /**
  * Created by KIMSEONHO
  *
@@ -63,8 +63,8 @@ define([
 	var headerView = new HeaderView();    	// HeaderView
 	var footerview = new FooterView();		// FooterView
 	var editView = new EditView();			// EditView
-	var imagelistView =new ImageListView(); // ImageListView
-	var firstpageView =new FirstPageView();
+	var imagelistView = new ImageListView(); // ImageListView
+	var firstpageView = new FirstPageView(); // Main Page
 	var loginpageView = new LoginPageView();
 	var joinpageView = new JoinPageView();
 	var loadpagecompositeView = new LoadPageCompositeView();
@@ -83,41 +83,39 @@ define([
 	 * !# 현재 있는 DOM이 아니면 el이 없다는 error 발생함.
 	 */
 	app_editor.addRegions({
-		FirstPageView:'#first_page',
-		LoginPageView:'#login_page',
-		JoinPageView:'#Join_page',
-		LoadPageCompositeView:'#load_page',
-		
-		scenePreviewCompositeView: '#scene_preview_panel',
-		imageListView: '#image_list_panel',
-		headerView: '#editor_main_header',
-		footerView: '#editor_main_footer',
-		sceneCompositeView: '#editor_main_content',
-		editView: '#edit_detail'
-		
-	});
+        FirstPageView:'#first_page',
+        LoginPageView:'#login_page',
+        JoinPageView:'#Join_page',
+        LoadPageCompositeView:'#load_page',
 
-	app_editor.addInitializer(function (options) {
-		app_editor.FirstPageView.show(firstpageView);	
-		app_editor.LoginPageView.show(loginpageView);
-		app_editor.JoinPageView.show(joinpageView);
-		app_editor.LoadPageCompositeView.show(loadpagecompositeView);
-		
-		app_editor.sceneCompositeView.show(sceneCompositeView);
-		//app_editor.currentScenePreview.show(scenePreviewCompositeView);
+        sceneCompositeView: '#editor_main_content',
+        scenePreviewCompositeView: '#scene_preview_panel',
 
-		app_editor.headerView.show(headerView);
-		app_editor.footerView.show(footerview);
-		app_editor.editView.show(editView);
-		app_editor.imageListView.show(imagelistView);
-		
-		/** Scene이 처음에 하나는 있어야 되기 때문에 */0
-		sceneList.push({
-			previewScene: true
-		});
+        imageListView: '#image_list_panel',
+        headerView: '#editor_main_header',
+        footerView: '#editor_main_footer',
+        editView: '#edit_detail'
+    });
 
-		//app_editor.currentScenePreview.show(scenePreviewCompositeView);
-	});
+    app_editor.addInitializer(function (options) {
+        app_editor.FirstPageView.show(firstpageView);
+        app_editor.LoginPageView.show(loginpageView);
+        app_editor.JoinPageView.show(joinpageView);
+        app_editor.LoadPageCompositeView.show(loadpagecompositeView);
+
+        app_editor.sceneCompositeView.show(sceneCompositeView);
+        app_editor.scenePreviewCompositeView.show(scenePreviewCompositeView);
+
+        app_editor.headerView.show(headerView);
+        app_editor.footerView.show(footerview);
+        app_editor.editView.show(editView);
+        app_editor.imageListView.show(imagelistView);
+
+        /** Scene이 처음에 하나는 있어야 되기 때문에 */
+        sceneList.push({
+            previewScene: true
+        });
+    });
 
 	app_editor.addInitializer(function (options) {
 
@@ -164,15 +162,11 @@ define([
 		//	var sceneView = sceneViewSet.get('sceneView');
 		//	pb.util.captureController.capturePreview(sceneView.$el, sceneViewSet);
 		//});
-
 	});
 
 	app_editor.addInitializer(function (options) {
 		this.router = new MobileRouter();
 		Backbone.history.start();
-		
-//		$( ":mobile-pagecontainer" ).pagecontainer( "change", "#load_page", { role: "page" } );
-
 	});
 
 	return app_editor;

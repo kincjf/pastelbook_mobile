@@ -5,9 +5,10 @@ ant-build
 /platforms/android/assets/www
 /platforms/android/build.xml
 /platforms/android/res/xml/config.xml
-.gradle
-build
-settings.gradle
-build.gradle
-AndroidManifest.xml
-config.xml
+/platforms/android/.gradle
+/platforms/android/CordovaLib/ant-build
+/platforms/android/CordovaLib/build
+/platforms/android/build.gradle
+/platforms/android/settings.gradle
+/platforms/android/AndroidManifest.xml
+/plugins/android.json

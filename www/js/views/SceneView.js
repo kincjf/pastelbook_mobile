@@ -146,7 +146,7 @@ define([
 
 		onShow: function () {
 			myLogger.trace("SceneView - onShow");
-			this.canvas = new fabric.Canvas(this.ui.canvas[0]);
+			this.canvas = new fabric.StaticCanvas(this.ui.canvas[0]);
 			pb.current.scene = this;		//필터적용을 위해서 캔버스를 가져오기 위해서
 			this.setupForInsertObject({
 				type: 'image',
@@ -215,8 +215,9 @@ define([
 				this.triggerMethod("AddTextBox", objectOptions);
 			}
 		},
-			
-		clickButton: function() {
+
+		// filter기능능
+	clickButton: function() {
 		//	this.imgGet();
 			if(this.count ==1 ){
 				$('#editor_main_footer').hide();
@@ -254,7 +255,7 @@ define([
 				}
 				this.count = 1 ;
 				}
-		},
+		}
 		
 	
 	})
