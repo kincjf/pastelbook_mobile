@@ -3,6 +3,12 @@
  * - 사진과 배경에 따라서 제공하는 Layout가 다름
  * Created by KIMSEONHO on 2015-03-30.
  */
+/*
+ * 사진을 편집시 이용하는 Page
+ * flip, crop, 투명화 기능
+ * jetty서버를 이용하여 이미지 편집 처리 후 다시 response하는 방식으로 png처리를 한다.
+ * 
+ * */
 define(['marionette','pb_templates'],function (Marionette,templates) {
 	return Marionette.ItemView.extend({
 		template: templates.EditView,
@@ -10,41 +16,40 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 			
 		},
 		events:{
-			'click #image_select': 'image_select',
-			'click #edge': 'edge',
-			'click #crop': 'crop',
-			'click #flip': 'flip',
-			'click #crop_save': 'crop_save',
-			'click #save' : 'save',
-			'click #close': 'close',
-			'click #edge_save': 'edge_confirm'
+			'click #image_select': 'image_select',	// 이미지 이동가능
+			'click #edge': 'edge',	//투명화를 위해 라인을 표시하게 하는 기능
+			'click #crop': 'crop',  //잘라내기
+			'click #flip': 'flip',	//좌우변환
+			'click #crop_save': 'crop_save', //좌우변환 
+			'click #save' : 'save', //편집완료 & 저장
+			'click #close': 'close', // 닫기
+			'click #edge_save': 'edge_confirm', //png처리 실시(서버로 이미지 데이터를 보낸다)
+			'click #edge_fore' : 'edge_fore' //edge foreground / background 설정
 		},
-		initialize:function(){
-		},
-		canvas1 : null,
-		canvas2 : null,
-		cavnas3 : null,
-		rect_up : null,
-		rect_down : null,
-		rect_left : null,
-		rect_right : null,
-		rect_crop : null,
-		img : null,
+		canvas1 : null,	//fabric canvas객체 (이미지 삽입)
+		canvas2 : null, //fabric canvas객체 (edge)
+		cavnas3 : null, //fabric canvas객체 (crop)
+		rect_up : null, //crop시 잘라지는 부분 사각형
+		rect_down : null, //crop시 잘라지는 부분 사각형
+		rect_left : null, //crop시 잘라지는 부분 사각형
+		rect_right : null, //crop시 잘라지는 부분 사각형
+		rect_crop : null, //crop시 잘라지고 남는부분 사각형
+		img : null, //이미지 객체
+		fore_point: null, //foreground 라인 표시 좌표값
+		back_point: null, //background 라인 표시 좌표값
+		point_flag: false,	// true:background / false:foreground
+		point_length: 0,	//point
 		
 		onRender:function(){
 			var that = this;
 			$('#edit_detail').on("pageshow",function(){
-				
+				//페이지가 보여질때 화면의 높이를 계산하여 중앙부분의 크기를 화면 크기에 맞게 설정하는 부분.
+				//그에 맞춰서 canvas의 크기도 맞춰준다.
 				var screen = $.mobile.getScreenHeight(),
 			    header = $(".ui-header").hasClass("ui-header-fixed") ? $(".ui-header").outerHeight() - 1 : $(".ui-header:eq(1)").outerHeight(),
 			    footer = $(".ui-footer").hasClass("ui-footer-fixed") ? $(".ui-footer").outerHeight() - 1 : $(".ui-footer:eq(1)").outerHeight(),
 			    contentCurrent = $(".ui-content").outerHeight() - $(".ui-content").height(),
 			    content = screen - header - footer - contentCurrent;
-			    console.log(screen);//615
-			    console.log(header);//76
-			    console.log(footer);//41
-			    console.log(contentCurrent);//2
-			    console.log(content);//492
 			    $(".ui-content").css('height',content);
 			    $('#canvas1').attr('width',$( window ).width());
 			    $('#canvas1').attr('height',content);
@@ -58,6 +63,8 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 			    that.canvas3 = new fabric.Canvas('canvas3');//crop
 			    $('.canvas-container').css('position','absolute');
 				$('#canvas1').parent().css('z-index',9999);
+				
+				//crop시 마우스이벤트 리스너
 				var started = false;
 				that.canvas3.on('mouse:down',function(options){
 					started = true;
@@ -87,14 +94,14 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 			this.canvas2.clear();
 			this.canvas3.clear();
 			var that = this;
-			//--------------------------------------------------
-			fabric.Image.fromURL('./test/image/my-image.jpg', function(imgInstance) {
+			//---------아래 주석부분을 적용할 수 없어 임의로 이미지를 불러다 쓰는 부분.
+			fabric.Image.fromURL('./test/image/my-image3.jpg', function(imgInstance) {
 				that.img = imgInstance;
 				that.img.set('transformMatrix',[1,0,0,1,0,0]);
 				that.canvas1.add(that.img);
 			});
 			//--------------------------------------------------
-			/*
+			/* 나중에 main화면에서 이미지 객체를 전역에서 가져와서 fabric객체를 바꿔주는 부분이다.
 			if(pb.current.object != null){
 				this.img = fabric.util.object.clone(pb.current.object.image);
 				this.img.left=0;
@@ -108,7 +115,26 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 			$('#canvas1').parent().css('z-index',9999);
 			$('#canvas2').parent().css('z-index',9997);
 			$('#canvas3').parent().css('z-index',9996);
+			var that = this;
+			this.canvas2.on("mouse:up",function(){
+				//fabric객체에 들어있는 라인의 좌표값을 받아 fore_point/back_point배열에 넣어준다.
+				//이걸가지고 서버에서 이미지 처리를 한다.
+				if(that.point_flag == false){
+					for(var i=0 ; i<that.canvas2.freeDrawingBrush._points.length;i++){
+						that.fore_point.push(that.canvas2.freeDrawingBrush._points[i]);
+					}
+				}else{
+					for(var i=0 ; i<that.canvas2.freeDrawingBrush._points.length;i++){
+						that.back_point.push(that.canvas2.freeDrawingBrush._points[i]);
+					}
+				}
+			});
+			
+			this.fore_point = [];
+			this.back_point = [];
+			this.point_flag = false;
 		},
+		
 		save:function(e){
 			this.observeBoolean(true,true);
 			pb.current.object.image = this.img;
@@ -116,22 +142,26 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 			this.canvas2.clear();
 			this.canvas3.clear();
 		},
+		
 		edge:function(e){
-			$('#edge_save').remove();
+			this.fore_point = [];
+			this.back_point = [];
 			this.canvas2.clear();
+			$('#edge_save').remove();
+			$('#edge_fore').remove();
 			$('#edge').parent().append($('<a href="javascript:void(0)" id="edge_save">confirm</a>'));
+			$('#edge').parent().append($('<a href="javascript:void(0)" id="edge_fore">background</a>'));
 			$('#canvas1').parent().css('z-index',500);
 			$('#canvas3').parent().css('z-index',400);
 			$('#canvas2').parent().css('z-index',9999);
-			
+			this.canvas2.freeDrawingBrush = null;
 			this.canvas2.freeDrawingBrush = new fabric['PencilBrush'](this.canvas2);
-			this.canvas2.freeDrawingBrush.width = parseInt(10, 10) || 1;
-		    this.canvas2.freeDrawingBrush.shadowBlur = 0;
-		    
+			this.canvas2.freeDrawingBrush.width = parseInt(5, 5) || 1;
+			this.canvas2.freeDrawingBrush.color = 'rgb(0, 255, 0)';
 		    this.observeBoolean(false,true);
 		},
 		edge_confirm : function(){
-		    console.log(this.canvas2.freeDrawingBrush._points);
+		    console.log(this.fore_point);
 			var item_left = this.canvas1.item(0).left;
 			var item_top = this.canvas1.item(0).top;
 			var item_width = this.canvas1.item(0).width;
@@ -141,23 +171,29 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 				format: 'jpg',
 				multiplier: 1,
 				quality: 1,
-				left: item_left,
-				top: item_top,
-				width: item_width,
-				height: item_height
+				left: this.canvas2.left,
+				top: this.canvas2.top,
+				width: this.canvas2.width,
+				height: this.canvas2.height
 			});
+			
+			var img = {};
+			img.x = item_left; img.y = item_top;
+			img.w=item_width; img.h=item_height;
+
 			var that = this;
 			$.ajax({
-				url: 'http://192.168.2.8:8084/hello',
+				url: 'http://192.168.0.14:8084/hello',	//서버로 데이터를 보내는 부분.
 				type: 'POST',
 				data: {
-					url: dataURL
-					//rect: {x:item_left,y:item_top,width:item_width,height:item_height}
+					url: dataURL,
+					img: JSON.stringify(img),
+					fore: JSON.stringify(this.fore_point),
+					back: JSON.stringify(this.back_point)
 				},
 				success: function(data){
 					var a = $.parseJSON(data);
-					//alert(a.url);
-					//$('#edit_img').attr('src',"data:image/png;base64,"+a.url);
+
 					var url = "data:image/png;base64,"+a.url;
 					//--------------------------------------------------
 					that.canvas1.clear();
@@ -172,14 +208,29 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 				
 			});
 		},
+		edge_fore:function(){
+			console.log(this.canvas2.freeDrawingBrush._points);
+			if($('#edge_fore').html()=='foreground'){
+				$('#edge_fore').html('background');
+				this.point_flag = false;
+				this.canvas2.freeDrawingBrush.color = 'rgb(0, 255, 0)';
+			}else{
+				$('#edge_fore').html('foreground');
+				this.point_flag = true;
+				this.canvas2.freeDrawingBrush.color = 'rgb(255, 0, 0)';
+			}
+		},
 		image_select:function(){
+			this.canvas2.clear();
 			$('#canvas1').parent().css('z-index',9999);
 			$('#canvas2').parent().css('z-index',9997);
 			$('#canvas3').parent().css('z-index',9998);
 			$('#edge_save').remove();
+			$('#edge_fore').remove();
 			this.observeBoolean(true,true);
+			console.log(this.canvas2.freeDrawingBrush);
 		},
-		crop_save:function(e){
+		crop_save:function(e){  // 이미지에서 선택된 부분을 제외하고 잘라낸다.
 			var dataURL = this.canvas1.toDataURL({
 				format: 'jpg',
 				multiplier: 1,
@@ -202,11 +253,13 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 		},
 		
 		crop:function(e){
+			this.canvas2.clear();
 			$('#edge_save').remove();
+			$('#edge_fore').remove();
 			$('#crop_save').remove();
 			this.removeRect();
 			
-			$('#crop').parent().append($('<a href="javascript:void(0)" id="crop_save">crop_save</a>'));
+			$('#crop').parent().append($('<a href="javascript:void(0)" id="crop_save">crop_save </a>'));
 			$('#canvas1').parent().css('z-index',9998);
 			$('#canvas2').parent().css('z-index',9997);
 			$('#canvas3').parent().css('z-index',9999);
@@ -215,8 +268,10 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 			
 		},
 		
-		flip:function(e){
+		flip:function(e){  // fabric에 transformMatrix를 통하여 이미지를 좌우 반전시킨다.
+			this.canvas2.clear();
 			$('#edge_save').remove();
+			$('#edge_fore').remove();
 			if(this.img.transformMatrix[0]==1){
 				this.img.set('transformMatrix',[-1,0,0,1,0,0]);
 			}else{
@@ -229,7 +284,8 @@ define(['marionette','pb_templates'],function (Marionette,templates) {
 			this.observeBoolean(true,true);
 		},
 		
-		observeBoolean:function(flag,rect_flag){
+		observeBoolean:function(flag,rect_flag){	
+			//flip,crop등 기능 변경시 가지고있던 뷰적인 객체들을 없애거나 생성시키기 위한 객체
 			if(this.canvas1.item(0) != undefined){
 				this.canvas1.item(0)['hasControls'] = flag;
 				this.canvas1.item(0)['hasBorders'] = flag;
